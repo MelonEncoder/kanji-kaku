@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
-	import rawKanjiSVG from '$lib/assets/kanjivg-2025-08-16/062ee.svg?raw';
 	import getPathEndpoints from '$lib/svg/getPathEndpoints';
 	import pointsToSmoothSVGPath from '$lib/svg/pointsToSmoothSVGPath';
 	import shakeElement from '$lib/effects/shakeElement';
+	import { loadKanjiSvg } from '$lib/svg/loadKanjiSvg';
 
 	interface ViewBox {
 		x: number;
@@ -36,6 +36,9 @@
 		completed: boolean;
 		valid: boolean;
 	}
+
+	let kanji: string = '村';
+	let rawKanjiSvg: string = '';
 
 	let viewBox: ViewBox = $state({ x: 0, y: 0, w: 109, h: 109 });
 	let kanjiStrokes: KanjiStroke[] = $state([]);
@@ -165,7 +168,7 @@
 		const sLen = strokePathElements[activeIndex]?.getTotalLength() ?? 0;
 
 		const ptOffset = 15;
-		const lenOffset = 6;
+		const lenOffset = 8;
 
 		// Start point condition
 		if (
@@ -187,14 +190,15 @@
 		}
 		// Length condition
 		if (sLen > kLen + lenOffset || sLen < kLen - lenOffset) {
-			return true;
+			return false;
 		}
 
 		return true;
 	}
 
 	onMount(async () => {
-		const svgDoc = new DOMParser().parseFromString(rawKanjiSVG, 'image/svg+xml');
+		rawKanjiSvg = await loadKanjiSvg(kanji);
+		const svgDoc = new DOMParser().parseFromString(rawKanjiSvg, 'image/svg+xml');
 		viewBox = parseViewBox(svgDoc);
 
 		kanjiStrokes = [...svgDoc.querySelectorAll('path')]
