@@ -179,30 +179,94 @@
 <main class="page">
 	<div class="stage">
 		<svg
+			class="kanji-grid"
+			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
+			aria-hidden="true"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path d={`M ${viewBox.w / 2} ${4.5} L ${viewBox.w / 2} ${viewBox.h - 4.5}`}></path>
+			<path d={`M ${4.5} ${viewBox.h / 2} L ${viewBox.w - 4.5} ${viewBox.h / 2}`}></path>
+		</svg>
+		<svg
 			class="kanji"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
 			aria-hidden="true"
+			xmlns="http://www.w3.org/2000/svg"
 		>
+			<defs>
+				<!-- START: big circle with arrow inside -->
+				<marker
+					id="start-arrow"
+					viewBox="0 0 24 24"
+					refX="12"
+					refY="12"
+					markerUnits="strokeWidth"
+					markerWidth="6"
+					markerHeight="6"
+					orient="auto"
+				>
+					<!-- circle badge -->
+					<circle class="start-cap" cx="12" cy="12" r="12" />
+					<!-- inner arrow (cutout look) -->
+					<path
+						d="M 8 12 L 15 12 M 13 9 L 16 12 L 13 15"
+						fill="none"
+						stroke="white"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</marker>
+
+				<!-- END: chevron only -->
+				<marker
+					id="end-arrow"
+					viewBox="0 0 24 24"
+					refX="12"
+					refY="12"
+					markerUnits="strokeWidth"
+					markerWidth="6"
+					markerHeight="6"
+					orient="auto"
+				>
+					<path
+						class="end-cap"
+						d="M 8 6 L 16 12 L 8 18 L 8 6 Z"
+						stroke-width="2.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</marker>
+			</defs>
+
 			{#each kanjiStrokes as stroke, i (i)}
 				<path
 					bind:this={pathElements[i]}
 					d={stroke.d}
+					class:fill={true}
 					class:hidden={i > activeIndex}
 					class:completed={stroke.completed}
 					class:active={i === activeIndex && !stroke.completed}
-					style={`--len:${stroke.length}; --dur:${Math.max(35, Math.round(stroke.length)) * 15}ms;`}
 				/>
+				<path
+					d={stroke.d}
+					class:dash={true}
+					class:hidden={i !== activeIndex}
+					class:completed={stroke.completed}
+					class:active={i === activeIndex}
+					marker-start="url(#start-arrow)"
+					marker-end="url(#end-arrow)"
+				></path>
 			{/each}
 		</svg>
-
 		<svg
 			class="svg-output"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
 			aria-hidden="true"
+			xmlns="http://www.w3.org/2000/svg"
 		>
 			{#each strokes as stroke, i (i)}
 				<path
-					class=""
 					id={stroke.id}
 					d={stroke.d}
 					class:hidden={i > activeIndex}
@@ -238,9 +302,25 @@
 
 	.stage {
 		position: relative;
-		width: 300px;
-		height: 300px;
+		width: 600px;
+		height: 600px;
 		border: 1px solid black;
+	}
+
+	.kanji-grid {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.kanji-grid path {
+		fill: none;
+		stroke: lightgray;
+		stroke-width: 0.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-dasharray: 2.5 2;
 	}
 
 	.kanji {
@@ -252,29 +332,32 @@
 
 	.kanji path {
 		fill: none;
-		stroke: #000;
-		stroke-width: 3;
 		stroke-linecap: round;
 		stroke-linejoin: round;
+	}
 
-		/* dash trick for animating path */
-		stroke-dasharray: var(--len) var(--len);
-		stroke-dashoffset: var(--len);
+	.kanji path.fill {
+		stroke-width: 3;
+		stroke: lightgray;
+	}
+
+	.kanji path.dash {
+		stroke: coral;
+		stroke-width: 1;
+		stroke-dasharray: 1.5 3;
 	}
 
 	.kanji path.hidden {
 		opacity: 0;
 	}
 
-	.kanji path.completed {
-		opacity: 1;
-		stroke-dashoffset: 0;
-		animation: none;
+	.kanji .start-cap {
+		fill: coral;
 	}
 
-	.kanji path.active {
-		opacity: 1;
-		animation: draw var(--dur) linear forwards;
+	.kanji .end-cap {
+		stroke: coral;
+		fill: coral;
 	}
 
 	@keyframes draw {
