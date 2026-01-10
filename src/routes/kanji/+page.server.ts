@@ -5,13 +5,12 @@ import n2 from "$lib/server/data/n2.json";
 import n3 from "$lib/server/data/n3.json";
 import n4 from "$lib/server/data/n4.json";
 import n5 from "$lib/server/data/n5.json";
-import other from "$lib/server/data/other.json";
+// import other from "$lib/server/data/other.json";
 
 export type KanjiEntry = {
 	strokes?: number | null;
 	grade?: number | null;
 	freq?: number | null;
-	jlpt_old?: number | null;
 	jlpt_new?: number | null;
 	meanings?: string[];
 	readings_on?: string[];
@@ -37,8 +36,8 @@ const SOURCES: Array<{ level: KanjiLevel; db: KanjiDb }> = [
 	{ level: "n4", db: n4 as KanjiDb },
 	{ level: "n3", db: n3 as KanjiDb },
 	{ level: "n2", db: n2 as KanjiDb },
-	{ level: "n1", db: n1 as KanjiDb },
-	{ level: "other", db: other as KanjiDb }
+	{ level: "n1", db: n1 as KanjiDb }
+	// { level: "other", db: other as KanjiDb }
 ];
 
 export const load: PageServerLoad = (async () => {

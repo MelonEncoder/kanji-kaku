@@ -1,29 +1,61 @@
-<script>
+<script lang="ts">
+	// keep minimal; links can be swapped later
 </script>
 
-<footer>
-	<p>Copyright &copy; 2026 Kanji Notebook.</p>
-	<nav>
-		<ul>
-			<li>GitHub</li>
-			<li>Discord</li>
-		</ul>
-	</nav>
+<footer class="site-footer">
+	<div class="inner">
+		<p class="copyright">© 2026 Kanji Notebook.</p>
+
+		<nav aria-label="Footer">
+			<ul class="links">
+				<li><a href="https://github.com/" rel="noreferrer" target="_blank">GitHub</a></li>
+				<li><a href="https://discord.com/" rel="noreferrer" target="_blank">Discord</a></li>
+			</ul>
+		</nav>
+	</div>
 </footer>
 
 <style>
-	footer {
-		display: flex;
-		flex-direction: row;
+	.site-footer {
+		width: 100%;
+		border-top: 1px solid color-mix(in srgb, black 10%, transparent);
 	}
-	ul {
+
+	.inner {
 		display: flex;
-		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+
+		max-width: 1200px;
+		margin-inline: auto;
+		padding: 1.25rem 2rem;
+	}
+
+	/* keep it quiet, let layout globals handle font + color */
+	.copyright {
+		margin: 0;
+		font-size: 0.95rem;
+		font-weight: 500;
+		opacity: 0.75;
+	}
+
+	.links {
+		display: flex;
+		gap: 1.25rem;
 		list-style: none;
-	}
-	li {
 		margin: 0;
 		padding: 0;
-		margin-left: 1rem;
+	}
+
+	.links a {
+		text-decoration: none;
+		font-weight: 500;
+		color: inherit;
+		opacity: 0.75;
+		transition: opacity 0.15s ease;
+	}
+
+	.links a:hover {
+		opacity: 1;
 	}
 </style>

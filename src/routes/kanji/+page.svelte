@@ -26,16 +26,15 @@
 				<section class="group" id={group.level}>
 					<header class="groupHeader">
 						<div class="groupTitle">
-							<h2>{label(group.level)}</h2>
+							<h2>
+								{#if group.level !== "other"}
+									JLPT {label(group.level)}
+								{:else}
+									Not in JLPT
+								{/if}
+							</h2>
 							<span class="count">{group.items.length}</span>
 						</div>
-						<p class="groupHint">
-							{#if group.level !== "other"}
-								JLPT {label(group.level)}
-							{:else}
-								Not in JLPT
-							{/if}
-						</p>
 					</header>
 
 					<div class="grid" aria-label={`${label(group.level)} kanji`}>
@@ -45,7 +44,7 @@
 								type="button"
 								aria-label={`Kanji ${item.kanji}`}
 							>
-								<div class="glyph">{item.kanji}</div>
+								<div class="kanji">{item.kanji}</div>
 							</button>
 						{/each}
 					</div>
@@ -61,12 +60,6 @@
 		padding: 1.25rem;
 		display: flex;
 		justify-content: center;
-
-		background:
-			radial-gradient(1200px 700px at 50% -10%, var(--wash), transparent 55%),
-			radial-gradient(900px 520px at 90% 20%, var(--wash2), transparent 60%),
-			linear-gradient(180deg, var(--paper), var(--paper));
-
 		color: var(--ink);
 		font-family: var(--font);
 	}
@@ -150,13 +143,6 @@
 		letter-spacing: 0.04em;
 	}
 
-	.groupHint {
-		margin: 0.35rem 0 0;
-		color: rgba(36, 27, 26, 0.68);
-		font-weight: 650;
-		font-size: 0.95rem;
-	}
-
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
@@ -196,11 +182,18 @@
 		outline-offset: 3px;
 	}
 
-	.glyph {
+	.kanji {
 		font-size: 2.2rem;
 		font-weight: 950;
-		line-height: 1;
 		color: var(--ink);
+	}
+
+	.kanji-meaning {
+		margin: 0;
+		color: rgba(36, 27, 26, 0.68);
+		font-weight: 600;
+		font-size: 0.8rem;
+		text-transform: lowercase;
 	}
 
 	@media (max-width: 640px) {
