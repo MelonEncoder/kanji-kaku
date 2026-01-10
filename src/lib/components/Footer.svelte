@@ -8,7 +8,13 @@
 
 		<nav aria-label="Footer">
 			<ul class="links">
-				<li><a href="https://github.com/" rel="noreferrer" target="_blank">GitHub</a></li>
+				<li>
+					<a
+						href="https://github.com/MelonEncoder/kanji-notebook.git"
+						rel="noreferrer"
+						target="_blank">GitHub</a
+					>
+				</li>
 				<li><a href="https://discord.com/" rel="noreferrer" target="_blank">Discord</a></li>
 			</ul>
 		</nav>

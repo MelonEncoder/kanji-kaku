@@ -1,20 +1,45 @@
 <script lang="ts">
+	import KanjiInfoModal from "$lib/components/KanjiInfoModal.svelte";
 	import type { PageData } from "./$types";
+	import { onMount } from "svelte";
 
-	const { data }: { data: PageData } = $props();
+	const { data }: { data: PageData } = $props<{ data: PageData }>();
 
-	let totalKanji: number = $state(0);
-
-	for (const group of data.groups) {
-		totalKanji += group.items.length;
-	}
+	const totalKanji = $derived(data.groups.reduce((sum, group) => sum + group.items.length, 0));
 
 	function label(level: string) {
 		return level === "other" ? "OTHER" : level.toUpperCase(); // n3 -> N3
 	}
+
+	// ---- selection + sidebar state ----
+	type Selected = { level: string; item: (typeof data.groups)[number]["items"][number] } | null;
+	let selected: Selected = $state(null);
+
+	const isOpen = $derived(!!selected);
+
+	function selectKanji(level: string, item: (typeof data.groups)[number]["items"][number]) {
+		selected = { level, item };
+	}
+
+	function closeSidebar() {
+		selected = null;
+	}
+
+	function toggleSelect(level: string, item: (typeof data.groups)[number]["items"][number]) {
+		if (selected?.item.kanji === item.kanji) closeSidebar();
+		else selectKanji(level, item);
+	}
+
+	onMount(() => {
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape" && isOpen) closeSidebar();
+		};
+		window.addEventListener("keydown", onKeyDown);
+		return () => window.removeEventListener("keydown", onKeyDown);
+	});
 </script>
 
-<main class="page">
+<main class="page" class:drawer-open={isOpen}>
 	<section class="content">
 		<header class="topbar">
 			<h1 class="title">Kanji</h1>
@@ -41,8 +66,11 @@
 						{#each group.items as item (item.kanji)}
 							<button
 								class="kanji-card"
+								class:selected={selected?.item.kanji === item.kanji}
 								type="button"
 								aria-label={`Kanji ${item.kanji}`}
+								aria-pressed={selected?.item.kanji === item.kanji}
+								onclick={() => toggleSelect(group.level, item)}
 							>
 								<div class="kanji">{item.kanji}</div>
 							</button>
@@ -52,22 +80,56 @@
 			{/each}
 		</div>
 	</section>
+
+	<!-- Backdrop (mobile + helps close) -->
+	<button
+		class="backdrop"
+		type="button"
+		aria-label="Close kanji details"
+		class:open={isOpen}
+		onclick={closeSidebar}
+	></button>
+
+	<!-- Sidebar drawer -->
+
+	<KanjiInfoModal
+		open={!!selected}
+		kanji={selected?.item.kanji ?? ""}
+		jlptLevel={selected?.level ?? "other"}
+		info={{
+			meanings: selected?.item.info.meanings ?? [],
+			readings_on: selected?.item.info.readings_on ?? [],
+			readings_kun: selected?.item.info.readings_kun ?? [],
+			strokes: selected?.item.info.strokes ?? null
+		}}
+		onClose={() => (selected = null)}
+		onPractice={(kanji: string) => {
+			selected = null; // close modal
+			console.log(kanji);
+			// route to practice
+			// goto(`/practice/${kanji}`);
+		}}
+	/>
 </main>
 
 <style>
+	/* Layout */
 	.page {
 		min-height: 100dvh;
 		padding: 1.25rem;
 		display: flex;
 		justify-content: center;
+
 		color: var(--ink);
 		font-family: var(--font);
+		position: relative;
 	}
 
 	.content {
 		width: min(1100px, 100%);
 	}
 
+	/* Top header matches your existing look */
 	.topbar {
 		max-width: var(--card-width, 900px);
 		margin: 0 auto 1.25rem;
@@ -132,10 +194,8 @@
 		align-items: center;
 		justify-content: center;
 		min-width: 2.25rem;
-
 		padding: 0.2rem 0.55rem;
 		border-radius: 999px;
-
 		border: 2px solid rgba(36, 27, 26, 0.12);
 		background: rgba(255, 255, 255, 0.65);
 		color: var(--ink);
@@ -163,11 +223,12 @@
 		transition:
 			transform 140ms ease,
 			border-color 140ms ease,
-			box-shadow 140ms ease;
+			box-shadow 140ms ease,
+			background 140ms ease;
 	}
 
 	.kanji-card:hover {
-		transform: translateY(-2px);
+		transform: translateY(-3px);
 		border-color: var(--stroke-accent);
 		box-shadow: var(--shadow);
 	}
@@ -182,31 +243,59 @@
 		outline-offset: 3px;
 	}
 
+	.kanji-card.selected {
+		border-color: var(--stroke-accent);
+		box-shadow: var(--shadow);
+		background: rgba(255, 255, 255, 0.92);
+	}
+
 	.kanji {
 		font-size: 2.2rem;
 		font-weight: 950;
 		color: var(--ink);
 	}
 
-	.kanji-meaning {
-		margin: 0;
-		color: rgba(36, 27, 26, 0.68);
-		font-weight: 600;
-		font-size: 0.8rem;
-		text-transform: lowercase;
+	/* Backdrop */
+	.backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(15, 10, 10, 0.22);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 200ms ease;
+		z-index: 40;
+		border: 0;
+		padding: 0;
 	}
 
+	.backdrop.open {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* Desktop behavior:
+	   keep backdrop disabled and allow content to remain interactive if you want
+	   (you can remove this if you prefer modal behavior everywhere). */
+	@media (min-width: 1024px) {
+		.backdrop {
+			/* On desktop, keep it subtle and non-blocking */
+			pointer-events: none;
+			opacity: 0;
+		}
+	}
+
+	/* Mobile: turn into a bottom sheet */
 	@media (max-width: 640px) {
 		.page {
 			padding: 1rem;
 		}
 
-		.grid {
-			padding: 0.85rem;
-		}
-
 		.groupHeader {
 			padding: 0.9rem;
+		}
+
+		.backdrop.open {
+			pointer-events: auto;
 		}
 	}
 </style>
