@@ -37,7 +37,7 @@
 		valid: boolean;
 	}
 
-	let { symbol }: { symbol: string } = $props();
+	let { symbol, onCompleteSymbol }: { symbol: string; onCompleteSymbol: () => void } = $props();
 
 	let rawSymbolSvg: string = "";
 
@@ -45,7 +45,7 @@
 	let kanjiStrokes: KanjiStroke[] = $state([]);
 
 	// control
-	let activeIndex = $state(0);
+	let activeIndex: number = $state(0);
 
 	// references to the actual rendered <path> nodes
 	let kanjiPathElements: (SVGPathElement | null)[] = $state([]);
@@ -76,15 +76,18 @@
 		);
 		if (activeIndex < kanjiStrokes.length - 1) {
 			activeIndex += 1;
+		} else if (activeIndex < kanjiStrokes.length) {
+			onCompleteSymbol();
 		}
 	}
 
-	function restart() {
-		activeIndex = 0;
-		kanjiStrokes = kanjiStrokes.map((s) => ({ ...s, completed: false }));
-		strokes = [];
-		current = null;
-	}
+	// function restart() {
+	// 	activeIndex = 0;
+	// 	kanjiStrokes = kanjiStrokes.map((s) => ({ ...s, completed: false }));
+	// 	strokes = [];
+	// 	current = null;
+	//  completedSymbol = false;
+	// }
 
 	// DRAWING FUNCTIONS
 	// Gets the point on the canvas even when scaled.
@@ -104,6 +107,41 @@
 			x: viewBox.x + (point.x / canvas.width) * viewBox.w,
 			y: viewBox.y + (point.y / canvas.height) * viewBox.h
 		};
+	}
+
+	function isValidStroke(): boolean {
+		const kPts = kanjiStrokes[activeIndex].endpoints;
+		const sPts = getPathEndpoints(strokes[activeIndex].d);
+		const kLen = kanjiStrokes[activeIndex].length;
+		const sLen = strokePathElements[activeIndex]?.getTotalLength() ?? 0;
+
+		const ptOffset = 15;
+		const lenOffset = 8;
+
+		// Start point condition
+		if (
+			sPts.start.x > kPts.start.x + ptOffset ||
+			sPts.start.y > kPts.start.y + ptOffset ||
+			sPts.start.x < kPts.start.x - ptOffset ||
+			sPts.start.y < kPts.start.y - ptOffset
+		) {
+			return false;
+		}
+		// End point condition
+		if (
+			sPts.end.x > kPts.end.x + ptOffset ||
+			sPts.end.y > kPts.end.y + ptOffset ||
+			sPts.end.x < kPts.end.x - ptOffset ||
+			sPts.end.y < kPts.end.y - ptOffset
+		) {
+			return false;
+		}
+		// Length condition
+		if (sLen > kLen + lenOffset || sLen < kLen - lenOffset) {
+			return false;
+		}
+
+		return true;
 	}
 
 	function pointerDown(e: PointerEvent) {
@@ -164,46 +202,12 @@
 		canvas.releasePointerCapture(e.pointerId);
 	}
 
-	function isValidStroke(): boolean {
-		const kPts = kanjiStrokes[activeIndex].endpoints;
-		const sPts = getPathEndpoints(strokes[activeIndex].d);
-		const kLen = kanjiStrokes[activeIndex].length;
-		const sLen = strokePathElements[activeIndex]?.getTotalLength() ?? 0;
-
-		const ptOffset = 15;
-		const lenOffset = 8;
-
-		// Start point condition
-		if (
-			sPts.start.x > kPts.start.x + ptOffset ||
-			sPts.start.y > kPts.start.y + ptOffset ||
-			sPts.start.x < kPts.start.x - ptOffset ||
-			sPts.start.y < kPts.start.y - ptOffset
-		) {
-			return false;
-		}
-		// End point condition
-		if (
-			sPts.end.x > kPts.end.x + ptOffset ||
-			sPts.end.y > kPts.end.y + ptOffset ||
-			sPts.end.x < kPts.end.x - ptOffset ||
-			sPts.end.y < kPts.end.y - ptOffset
-		) {
-			return false;
-		}
-		// Length condition
-		if (sLen > kLen + lenOffset || sLen < kLen - lenOffset) {
-			return false;
-		}
-
-		return true;
-	}
-
 	onMount(async () => {
 		rawSymbolSvg = await loadKanjiSvg(symbol);
-		const svgDoc = new DOMParser().parseFromString(rawSymbolSvg, "image/svg+xml");
-		viewBox = parseViewBox(svgDoc);
 
+		const svgDoc = new DOMParser().parseFromString(rawSymbolSvg, "image/svg+xml");
+
+		viewBox = parseViewBox(svgDoc);
 		kanjiStrokes = [...svgDoc.querySelectorAll("path")]
 			.map((p) => {
 				const d = p.getAttribute("d") ?? "";
@@ -235,7 +239,7 @@
 	});
 </script>
 
-<main class="page">
+<div class="component">
 	<div class="stage" bind:this={stageElement} class:shake={isShaking}>
 		<svg
 			class="kanji-grid"
@@ -338,37 +342,28 @@
 		></canvas>
 	</div>
 
-	<div class="controls">
-		<button onclick={restart}>Restart</button>
-		<div class="status">Active stroke: {activeIndex + 1} / {kanjiStrokes.length}</div>
-	</div>
-</main>
+	<div class="status">Current Stroke: {activeIndex + 1} / {kanjiStrokes.length}</div>
+</div>
 
 <style>
-	.page {
+	.component {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 1rem;
-		min-height: 100dvh;
-		padding: 1.25rem;
-		color: var(--ink);
-		font-family: var(--font);
+		width: fit-content;
+		height: fit-content;
 	}
 
 	.stage {
 		position: relative;
+		aspect-ratio: 1 / 1;
 		width: min(600px, 92vw);
 		aspect-ratio: 1 / 1;
-
 		border-radius: var(--radius-lg);
 		background: var(--paper-soft);
-
 		border: 2px solid var(--stroke-strong);
-
 		box-shadow: var(--shadow);
 		overflow: hidden;
-
 		will-change: transform;
 	}
 
@@ -466,61 +461,6 @@
 		cursor: crosshair;
 	}
 
-	/* Controls area as a small paper card */
-	.controls {
-		display: flex;
-		flex-direction: column;
-		gap: 0.6rem;
-		width: min(360px, 92vw);
-
-		border-radius: var(--radius-md);
-		background: var(--paper-soft);
-		border: 2px solid var(--stroke);
-
-		box-shadow: var(--shadow-soft);
-		padding: 0.85rem;
-	}
-
-	button {
-		border: 2px solid var(--stroke);
-		background: var(--paper);
-		color: var(--ink);
-
-		padding: 0.65rem 0.9rem;
-		border-radius: var(--radius-sm);
-
-		font-family: var(--font);
-		font-weight: 900;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-
-		cursor: pointer;
-		box-shadow: var(--shadow-soft);
-
-		transition:
-			transform 140ms ease,
-			box-shadow 140ms ease,
-			border-color 140ms ease,
-			background 140ms ease;
-	}
-
-	button:hover {
-		transform: translateY(-2px);
-		border-color: var(--stroke-accent);
-		box-shadow: var(--shadow);
-		background: rgba(255, 255, 255, 0.96);
-	}
-
-	button:active {
-		transform: translateY(-1px);
-		box-shadow: var(--shadow-soft);
-	}
-
-	button:focus-visible {
-		outline: 3px solid var(--stroke-accent);
-		outline-offset: 3px;
-	}
-
 	.status {
 		font-size: 0.95rem;
 		color: var(--muted);
@@ -529,16 +469,12 @@
 	}
 
 	@media (max-width: 640px) {
-		.page {
+		.component {
 			padding: 1rem;
 		}
 
 		.stage {
 			border-radius: var(--radius-md);
-		}
-
-		.controls {
-			padding: 0.75rem;
 		}
 	}
 </style>

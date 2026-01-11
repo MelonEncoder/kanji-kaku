@@ -63,18 +63,18 @@
 	<section class="content">
 		<header class="topbar">
 			<div
-				class="tab-selector"
+				class="tabSelector"
 				role="tablist"
 				aria-label="Kana Script"
 				data-active={currentScript}
 			>
-				<div class="tab-indicator" aria-hidden="true"></div>
+				<div class="tabIndicator" aria-hidden="true"></div>
 
 				<button
 					type="button"
 					role="tab"
 					aria-selected={currentScript === "hiragana"}
-					class="tab-button"
+					class="tabButton"
 					onclick={() => setScript("hiragana")}
 				>
 					HIRAGANA
@@ -84,7 +84,7 @@
 					type="button"
 					role="tab"
 					aria-selected={currentScript === "katakana"}
-					class="tab-button"
+					class="tabButton"
 					onclick={() => setScript("katakana")}
 				>
 					KATAKANA
@@ -203,7 +203,7 @@
 		font-weight: 600;
 	}
 
-	.tab-selector {
+	.tabSelector {
 		position: relative;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -224,7 +224,7 @@
 			inset 0 0 0 1px var(--wash);
 	}
 
-	.tab-button {
+	.tabButton {
 		position: relative;
 		z-index: 1;
 
@@ -247,16 +247,16 @@
 			opacity 140ms ease;
 	}
 
-	.tab-button:hover {
+	.tabButton:hover {
 		color: var(--ink);
 		transform: translateY(-1px);
 	}
 
-	.tab-button[aria-selected="true"] {
+	.tabButton[aria-selected="true"] {
 		color: var(--ink);
 	}
 
-	.tab-indicator {
+	.tabIndicator {
 		position: absolute;
 		top: 0.25rem;
 		bottom: 0.25rem;
@@ -274,11 +274,11 @@
 		transform: translateX(0%);
 	}
 
-	.tab-selector[data-active="katakana"] .tab-indicator {
+	.tabSelector[data-active="katakana"] .tabIndicator {
 		transform: translateX(100%);
 	}
 
-	.tab-button:focus-visible {
+	.tabButton:focus-visible {
 		outline: 3px solid var(--stroke-accent);
 		outline-offset: 3px;
 	}

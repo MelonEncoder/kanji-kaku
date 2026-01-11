@@ -1,7 +1,5 @@
 <script lang="ts">
 	import favicon from "$lib/assets/favicon.svg";
-	import Footer from "$lib/components/Footer.svelte";
-	import Header from "$lib/components/Header.svelte";
 
 	let { children } = $props();
 </script>
@@ -10,9 +8,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<Header />
 {@render children()}
-<Footer />
 
 <style>
 	@import url("https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&display=swap");
@@ -31,6 +27,7 @@
 		--coral: #ff5c4a; /* main accent (seal red) */
 		--coral-strong: #e84a3a;
 		--orange: #ff7a3c; /* supporting, not primary */
+		--light-orange: rgb(255, 242, 241);
 
 		/* WASHES (used sparingly) */
 		--wash: rgba(255, 92, 74, 0.18);
