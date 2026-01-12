@@ -4,7 +4,7 @@ export function kanjiToKanjiVgFile(kanji: string): string {
 	return `${cp.toString(16).padStart(5, "0")}.svg`;
 }
 
-export async function loadKanjiSvg(kanji: string): Promise<string> {
+export async function loadSymbolSvg(kanji: string): Promise<string> {
 	const file = kanjiToKanjiVgFile(kanji);
 	const res = await fetch(`/assets/kanjivg/${file}`);
 	if (!res.ok) throw new Error(`SVG not found: ${file}`);

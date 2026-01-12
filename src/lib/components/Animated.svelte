@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from "svelte";
-	import { loadKanjiSvg } from "$lib/svg/loadKanjiSvg";
+	import { loadSymbolSvg } from "$lib/svg/loadSymbolSvg";
 
 	interface KanjiStroke {
 		id: string;
@@ -78,7 +78,7 @@
 	}
 
 	onMount(async () => {
-		rawKanjiSvg = await loadKanjiSvg(kanji);
+		rawKanjiSvg = await loadSymbolSvg(kanji);
 		const svgDoc = new DOMParser().parseFromString(rawKanjiSvg, "image/svg+xml");
 		viewBox = parseViewBox(svgDoc);
 

@@ -3,7 +3,7 @@
 	import getPathEndpoints from "$lib/svg/getPathEndpoints";
 	import pointsToSmoothSVGPath from "$lib/svg/pointsToSmoothSVGPath";
 	import shakeElement from "$lib/effects/shakeElement";
-	import { loadKanjiSvg } from "$lib/svg/loadKanjiSvg";
+	import { loadSymbolSvg } from "$lib/svg/loadSymbolSvg";
 
 	interface ViewBox {
 		x: number;
@@ -37,7 +37,17 @@
 		valid: boolean;
 	}
 
-	let { symbol, onCompleteSymbol }: { symbol: string; onCompleteSymbol: () => void } = $props();
+	let {
+		symbol,
+		strokeHintsVisible,
+		userStrokesVisible,
+		onCompleteSymbol
+	}: {
+		symbol: string;
+		strokeHintsVisible: boolean;
+		userStrokesVisible: boolean;
+		onCompleteSymbol: () => void;
+	} = $props();
 
 	let rawSymbolSvg: string = "";
 
@@ -52,14 +62,15 @@
 	let strokePathElements: (SVGPathElement | null)[] = $state([]);
 
 	let canvas: HTMLCanvasElement;
-
 	let stageElement: HTMLDivElement;
+
 	let isShaking: boolean = $state(false);
 
 	// drawing
-	let isDrawing: boolean = false;
+	let isDrawing: boolean = $state(false);
 	let strokes: Stroke[] = $state([]);
-	let current: Stroke | null = $state(null);
+	let currentStroke: Stroke | null = $state(null);
+	let failedCurrentStroke: boolean = $state(false);
 
 	function parseViewBox(doc: Document): ViewBox {
 		const svg = doc.querySelector("svg");
@@ -77,6 +88,7 @@
 		if (activeIndex < kanjiStrokes.length - 1) {
 			activeIndex += 1;
 		} else if (activeIndex < kanjiStrokes.length) {
+			activeIndex += 1; // used as check for stroke visibility
 			onCompleteSymbol();
 		}
 	}
@@ -85,7 +97,7 @@
 	// 	activeIndex = 0;
 	// 	kanjiStrokes = kanjiStrokes.map((s) => ({ ...s, completed: false }));
 	// 	strokes = [];
-	// 	current = null;
+	// 	currentStroke = null;
 	//  completedSymbol = false;
 	// }
 
@@ -146,7 +158,7 @@
 
 	function pointerDown(e: PointerEvent) {
 		const p = canvasToViewBox(getCanvasPoint(e));
-		current = {
+		currentStroke = {
 			id: "stroke-" + String(activeIndex),
 			d: `M ${p.x.toFixed(4)} ${p.y.toFixed(4)}`,
 			length: 0,
@@ -155,7 +167,7 @@
 			valid: false
 		};
 
-		strokes[activeIndex] = current;
+		strokes[activeIndex] = currentStroke;
 		strokes = strokes;
 
 		isDrawing = true;
@@ -163,13 +175,13 @@
 	}
 
 	function pointerMove(e: PointerEvent) {
-		if (!isDrawing || !current) return;
+		if (!isDrawing || !currentStroke) return;
 
 		const p = canvasToViewBox(getCanvasPoint(e));
 
-		current.points.push({ x: p.x, y: p.y });
-		current.d += ` L ${p.x.toFixed(4)} ${p.y.toFixed(4)}`;
-		strokes[activeIndex] = current;
+		currentStroke.points.push({ x: p.x, y: p.y });
+		currentStroke.d += ` L ${p.x.toFixed(4)} ${p.y.toFixed(4)}`;
+		strokes[activeIndex] = currentStroke;
 	}
 
 	function pointerUp(e: PointerEvent) {
@@ -177,25 +189,26 @@
 
 		const idx: number = activeIndex;
 
-		if (current) {
+		if (currentStroke) {
 			if (isValidStroke()) {
-				current.d = pointsToSmoothSVGPath(current.points);
-				current.completed = true;
-				current.valid = true;
+				currentStroke.d = pointsToSmoothSVGPath(currentStroke.points);
+				currentStroke.completed = true;
+				currentStroke.valid = true;
+				failedCurrentStroke = false;
 
-				strokes[idx] = current;
+				strokes[idx] = currentStroke;
 				strokes = strokes;
 
 				markStrokeCorrectAndAdvance();
 			} else {
-				shakeElement(stageElement);
+				currentStroke = null;
+				failedCurrentStroke = true;
 
-				// Remove current stroke so user can retry
+				// Remove currentStroke stroke so user can retry
 				strokes[idx] = undefined as unknown as Stroke;
 				strokes = strokes.filter((s) => s); // compact array so {#each} drops it
 
-				current = null;
-				console.log("failed");
+				shakeElement(stageElement);
 			}
 		}
 
@@ -203,7 +216,7 @@
 	}
 
 	onMount(async () => {
-		rawSymbolSvg = await loadKanjiSvg(symbol);
+		rawSymbolSvg = await loadSymbolSvg(symbol);
 
 		const svgDoc = new DOMParser().parseFromString(rawSymbolSvg, "image/svg+xml");
 
@@ -242,7 +255,7 @@
 <div class="component">
 	<div class="stage" bind:this={stageElement} class:shake={isShaking}>
 		<svg
-			class="kanji-grid"
+			class="svgSymbolGrid"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
 			aria-hidden="true"
 			xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +264,7 @@
 			<path d={`M ${4.5} ${viewBox.h / 2} L ${viewBox.w - 4.5} ${viewBox.h / 2}`}></path>
 		</svg>
 		<svg
-			class="kanji"
+			class="svgSymbol"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
 			aria-hidden="true"
 			xmlns="http://www.w3.org/2000/svg"
@@ -267,7 +280,7 @@
 					markerHeight="6"
 					orient="auto"
 				>
-					<circle class="start-cap" cx="12" cy="12" r="12" />
+					<circle class="startCap" cx="12" cy="12" r="12" />
 					<path
 						d="M 8 12 L 15 12 M 13 9 L 16 12 L 13 15"
 						fill="none"
@@ -288,7 +301,7 @@
 					orient="auto"
 				>
 					<path
-						class="end-cap"
+						class="endCap"
 						d="M 8 6 L 16 12 L 8 18 L 8 6 Z"
 						stroke-width="2.5"
 						stroke-linecap="round"
@@ -298,41 +311,48 @@
 			</defs>
 
 			{#each kanjiStrokes as kStroke, i (i)}
-				<path
-					bind:this={kanjiPathElements[i]}
-					d={kStroke.d}
-					class:fill={true}
-					class:hidden={i > activeIndex}
-					class:completed={kStroke.completed}
-				/>
-				<path
-					d={kStroke.d}
-					class:dash={true}
-					class:hidden={i !== activeIndex}
-					class:completed={kStroke.completed}
-					marker-start={kStroke.completed ? "" : "url(#start-marker)"}
-					marker-end={kStroke.completed ? "" : "url(#end-marker)"}
-				>
-				</path>
-			{/each}
-		</svg>
-		<svg
-			class="svg-output"
-			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
-			aria-hidden="true"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			{#each strokes as stroke, i (i)}
-				<path
-					bind:this={strokePathElements[i]}
-					id={stroke.id}
-					d={stroke.d}
-					class:hidden={stroke.completed && stroke.valid}
-				></path>
+				<g id={kStroke.id}>
+					<path
+						bind:this={kanjiPathElements[i]}
+						class:strokeFill={kStroke.completed}
+						d={kStroke.d}
+						class:hidden={userStrokesVisible}
+					/>
+					<path
+						class:strokeHintFill={strokeHintsVisible}
+						d={kStroke.d}
+						class:hidden={i !== activeIndex}
+					/>
+					<path
+						class:strokeHint={strokeHintsVisible}
+						d={kStroke.d}
+						class:hidden={i !== activeIndex}
+						marker-start={strokeHintsVisible ||
+						(!strokeHintsVisible && failedCurrentStroke)
+							? "url(#start-marker)"
+							: undefined}
+						marker-end={strokeHintsVisible ? "url(#end-marker)" : undefined}
+					/>
+					{#if strokes[i]}
+						<path
+							class="svgOutput"
+							bind:this={strokePathElements[i]}
+							d={strokes[i].d}
+							id={strokes[i].id}
+							class:hidden={!userStrokesVisible &&
+								strokes[i].completed &&
+								strokes[i].valid}
+						>
+						</path>
+					{:else}
+						<path class="svgOutput hidden" bind:this={strokePathElements[i]} d="">
+						</path>
+					{/if}
+				</g>
 			{/each}
 		</svg>
 		<canvas
-			class="drawing-input"
+			class="drawingInput"
 			width="300"
 			height="300"
 			bind:this={canvas}
@@ -342,7 +362,10 @@
 		></canvas>
 	</div>
 
-	<div class="status">Current Stroke: {activeIndex + 1} / {kanjiStrokes.length}</div>
+	<div class="status">
+		Strokes Completed: {activeIndex} /
+		{kanjiStrokes.length}
+	</div>
 </div>
 
 <style>
@@ -367,7 +390,7 @@
 		will-change: transform;
 	}
 
-	.kanji-grid {
+	.svgSymbolGrid {
 		position: absolute;
 		inset: 0;
 		width: 100%;
@@ -375,7 +398,7 @@
 		opacity: 0.95;
 	}
 
-	.kanji-grid path {
+	.svgSymbolGrid path {
 		fill: none;
 		stroke: rgba(36, 27, 26, 0.12);
 		stroke-width: 0.55;
@@ -385,73 +408,65 @@
 	}
 
 	/* main svg overlay */
-	.kanji {
+	.svgSymbol {
 		position: absolute;
 		inset: 0;
 		width: 100%;
 		height: 100%;
+		opacity: 1;
 	}
 
-	.kanji path {
+	.svgSymbol .hidden {
+		opacity: 0;
+	}
+
+	.svgSymbol path {
 		fill: none;
 		stroke-linecap: round;
 		stroke-linejoin: round;
 	}
 
-	.kanji path.fill {
+	.svgSymbol path.strokeFill {
+		stroke: var(--ink);
 		stroke-width: 3;
-		stroke: rgba(36, 27, 26, 0.16);
 	}
 
-	.kanji path.dash {
+	.svgSymbol path.strokeHintFill {
+		stroke: var(--light-gray);
+		stroke-width: 3;
+	}
+
+	.svgSymbol path.strokeHint {
 		stroke: var(--coral);
 		stroke-width: 1.2;
 		stroke-dasharray: 1.6 3.2;
-		filter: drop-shadow(0 2px 6px rgba(255, 92, 74, 0.12));
 	}
 
-	.kanji .hidden {
-		opacity: 0;
-	}
-
-	/* markers */
-	.kanji .start-cap {
+	/* hint markers */
+	.svgSymbol .startCap {
 		fill: var(--coral);
 	}
 
-	.kanji .end-cap {
+	.svgSymbol .endCap {
 		stroke: var(--coral);
 		fill: var(--coral);
 	}
 
-	.kanji path.completed {
-		stroke: var(--ink);
-		opacity: 0.95;
-	}
-
 	/* user drawn strokes */
-	.svg-output {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-	}
-
-	.svg-output path {
+	.svgOutput {
 		fill: none;
 		stroke: var(--ink);
 		stroke-width: 3.2;
 		stroke-linecap: round;
 		stroke-linejoin: round;
-		filter: drop-shadow(0 2px 4px rgba(36, 27, 26, 0.08));
 	}
 
-	.svg-output path.hidden {
+	.svgOutput.hidden {
 		opacity: 0;
 	}
 
 	/* input capture */
-	.drawing-input {
+	.drawingInput {
 		position: absolute;
 		inset: 0;
 		width: 100%;

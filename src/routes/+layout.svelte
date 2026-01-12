@@ -15,9 +15,10 @@
 
 	:global(:root) {
 		/* INK */
-		--ink: #241b1a; /* sumi ink */
+		--ink: rgb(36, 27, 26); /* sumi ink */
 		--ink-soft: rgba(36, 27, 26, 0.85);
 		--muted: rgba(36, 27, 26, 0.6);
+		--light-gray: rgb(228, 227, 227);
 
 		/* PAPER */
 		--paper: #ffffff;
