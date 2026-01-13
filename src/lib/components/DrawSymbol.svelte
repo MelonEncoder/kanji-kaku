@@ -3,7 +3,7 @@
 	import getPathEndpoints from "$lib/svg/getPathEndpoints";
 	import pointsToSmoothSVGPath from "$lib/svg/pointsToSmoothSVGPath";
 	import shakeElement from "$lib/effects/shakeElement";
-	import { loadSymbolSvg } from "$lib/svg/loadSymbolSvg";
+	import { loadKanjiVgSvg, symbolToKanjiVgCode } from "$lib/svg/loadKanjiVgSvg";
 
 	interface ViewBox {
 		x: number;
@@ -216,7 +216,7 @@
 	}
 
 	onMount(async () => {
-		rawSymbolSvg = await loadSymbolSvg(symbol);
+		rawSymbolSvg = await loadKanjiVgSvg(symbolToKanjiVgCode(symbol));
 
 		const svgDoc = new DOMParser().parseFromString(rawSymbolSvg, "image/svg+xml");
 

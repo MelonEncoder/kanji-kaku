@@ -4,7 +4,7 @@
 
 	type Step = { type: "draw"; prompt: string; symbol: string; repsLabel?: string };
 
-	const baseSymbol = "日";
+	const baseSymbol = "猫";
 	const basePrompt = `Write the kanji for "cat"`;
 
 	const steps: Step[] = Array.from({ length: 5 }, (_, i) => ({
@@ -95,8 +95,8 @@
 				{#if currentStep?.type === "draw"}
 					<DrawSymbol
 						symbol={currentStep.symbol}
-						strokeHintsVisible={false}
-						userStrokesVisible={true}
+						strokeHintsVisible={true}
+						userStrokesVisible={false}
 						onCompleteSymbol={handleCompleteSymbol}
 					/>
 				{/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from "svelte";
-	import { loadSymbolSvg } from "$lib/svg/loadSymbolSvg";
+	import { loadKanjiVgSvg, symbolToKanjiVgCode } from "$lib/svg/loadKanjiVgSvg";
 
 	interface KanjiStroke {
 		id: string;
@@ -18,11 +18,11 @@
 
 	// Keep it simple: a visual reference widget
 	let {
-		kanji = "挨",
+		kanji,
 		loop = true,
 		showControls = true
 	}: {
-		kanji?: string;
+		kanji: string;
 		loop?: boolean;
 		showControls?: boolean;
 	} = $props();
@@ -78,7 +78,7 @@
 	}
 
 	onMount(async () => {
-		rawKanjiSvg = await loadSymbolSvg(kanji);
+		rawKanjiSvg = await loadKanjiVgSvg(symbolToKanjiVgCode(kanji));
 		const svgDoc = new DOMParser().parseFromString(rawKanjiSvg, "image/svg+xml");
 		viewBox = parseViewBox(svgDoc);
 

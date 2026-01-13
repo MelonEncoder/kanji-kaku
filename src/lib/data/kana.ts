@@ -26,824 +26,948 @@ export type KanaRow =
 export type KanaCol = "a" | "i" | "u" | "e" | "o" | "none";
 
 export interface KanaCell {
-	id: string; // e.g. "base:ka" or "dakudan:ka" or "yoon:ki+ya"
+	romaji: string;
 	kind: KanaKind;
-
 	row: KanaRow;
 	col: KanaCol;
-
-	/** reading you want to display/test against */
-	romaji: string;
-
-	/** underlying base kana key (helps grouping & derivations) */
-	baseKey?: string; // e.g. "ka" for ga, "shi" for ji(じ), "ki" for kya
-
-	hira: string;
-	kata: string;
-
-	notes?: string;
+	hiragana: { symbol: string; kvg: string };
+	katakana: { symbol: string; kvg: string };
 }
 
 export const KANA: KanaCell[] = [
-	// =========================
-	// BASE (GOJŪON)
-	// =========================
-	{ id: "base:a", kind: "base", row: "v", col: "a", romaji: "a", hira: "あ", kata: "ア" },
-	{ id: "base:i", kind: "base", row: "v", col: "i", romaji: "i", hira: "い", kata: "イ" },
-	{ id: "base:u", kind: "base", row: "v", col: "u", romaji: "u", hira: "う", kata: "ウ" },
-	{ id: "base:e", kind: "base", row: "v", col: "e", romaji: "e", hira: "え", kata: "エ" },
-	{ id: "base:o", kind: "base", row: "v", col: "o", romaji: "o", hira: "お", kata: "オ" },
-
-	{ id: "base:ka", kind: "base", row: "k", col: "a", romaji: "ka", hira: "か", kata: "カ" },
-	{ id: "base:ki", kind: "base", row: "k", col: "i", romaji: "ki", hira: "き", kata: "キ" },
-	{ id: "base:ku", kind: "base", row: "k", col: "u", romaji: "ku", hira: "く", kata: "ク" },
-	{ id: "base:ke", kind: "base", row: "k", col: "e", romaji: "ke", hira: "け", kata: "ケ" },
-	{ id: "base:ko", kind: "base", row: "k", col: "o", romaji: "ko", hira: "こ", kata: "コ" },
-
-	{ id: "base:sa", kind: "base", row: "s", col: "a", romaji: "sa", hira: "さ", kata: "サ" },
 	{
-		id: "base:shi",
+		romaji: "a",
+		kind: "base",
+		row: "v",
+		col: "a",
+		hiragana: { symbol: "あ", kvg: "03042" },
+		katakana: { symbol: "ア", kvg: "030A2" }
+	},
+	{
+		romaji: "i",
+		kind: "base",
+		row: "v",
+		col: "i",
+		hiragana: { symbol: "い", kvg: "03044" },
+		katakana: { symbol: "イ", kvg: "030A4" }
+	},
+	{
+		romaji: "u",
+		kind: "base",
+		row: "v",
+		col: "u",
+		hiragana: { symbol: "う", kvg: "03046" },
+		katakana: { symbol: "ウ", kvg: "030A6" }
+	},
+	{
+		romaji: "e",
+		kind: "base",
+		row: "v",
+		col: "e",
+		hiragana: { symbol: "え", kvg: "03048" },
+		katakana: { symbol: "エ", kvg: "030A8" }
+	},
+	{
+		romaji: "o",
+		kind: "base",
+		row: "v",
+		col: "o",
+		hiragana: { symbol: "お", kvg: "0304A" },
+		katakana: { symbol: "オ", kvg: "030AA" }
+	},
+
+	{
+		romaji: "ka",
+		kind: "base",
+		row: "k",
+		col: "a",
+		hiragana: { symbol: "か", kvg: "0304B" },
+		katakana: { symbol: "カ", kvg: "030AB" }
+	},
+	{
+		romaji: "ki",
+		kind: "base",
+		row: "k",
+		col: "i",
+		hiragana: { symbol: "き", kvg: "0304D" },
+		katakana: { symbol: "キ", kvg: "030AD" }
+	},
+	{
+		romaji: "ku",
+		kind: "base",
+		row: "k",
+		col: "u",
+		hiragana: { symbol: "く", kvg: "0304F" },
+		katakana: { symbol: "ク", kvg: "030AF" }
+	},
+	{
+		romaji: "ke",
+		kind: "base",
+		row: "k",
+		col: "e",
+		hiragana: { symbol: "け", kvg: "03051" },
+		katakana: { symbol: "ケ", kvg: "030B1" }
+	},
+	{
+		romaji: "ko",
+		kind: "base",
+		row: "k",
+		col: "o",
+		hiragana: { symbol: "こ", kvg: "03053" },
+		katakana: { symbol: "コ", kvg: "030B3" }
+	},
+
+	{
+		romaji: "sa",
+		kind: "base",
+		row: "s",
+		col: "a",
+		hiragana: { symbol: "さ", kvg: "03055" },
+		katakana: { symbol: "サ", kvg: "030B5" }
+	},
+	{
+		romaji: "shi",
 		kind: "base",
 		row: "s",
 		col: "i",
-		romaji: "shi",
-		hira: "し",
-		kata: "シ",
-		notes: "spelling: si → shi"
+		hiragana: { symbol: "し", kvg: "03057" },
+		katakana: { symbol: "シ", kvg: "030B7" }
 	},
-	{ id: "base:su", kind: "base", row: "s", col: "u", romaji: "su", hira: "す", kata: "ス" },
-	{ id: "base:se", kind: "base", row: "s", col: "e", romaji: "se", hira: "せ", kata: "セ" },
-	{ id: "base:so", kind: "base", row: "s", col: "o", romaji: "so", hira: "そ", kata: "ソ" },
-
-	{ id: "base:ta", kind: "base", row: "t", col: "a", romaji: "ta", hira: "た", kata: "タ" },
 	{
-		id: "base:chi",
+		romaji: "su",
+		kind: "base",
+		row: "s",
+		col: "u",
+		hiragana: { symbol: "す", kvg: "03059" },
+		katakana: { symbol: "ス", kvg: "030B9" }
+	},
+	{
+		romaji: "se",
+		kind: "base",
+		row: "s",
+		col: "e",
+		hiragana: { symbol: "せ", kvg: "0305B" },
+		katakana: { symbol: "セ", kvg: "030BB" }
+	},
+	{
+		romaji: "so",
+		kind: "base",
+		row: "s",
+		col: "o",
+		hiragana: { symbol: "そ", kvg: "0305D" },
+		katakana: { symbol: "ソ", kvg: "030BD" }
+	},
+
+	{
+		romaji: "ta",
+		kind: "base",
+		row: "t",
+		col: "a",
+		hiragana: { symbol: "た", kvg: "0305F" },
+		katakana: { symbol: "タ", kvg: "030BF" }
+	},
+	{
+		romaji: "chi",
 		kind: "base",
 		row: "t",
 		col: "i",
-		romaji: "chi",
-		hira: "ち",
-		kata: "チ",
-		notes: "spelling: ti → chi"
+		hiragana: { symbol: "ち", kvg: "03061" },
+		katakana: { symbol: "チ", kvg: "030C1" }
 	},
 	{
-		id: "base:tsu",
+		romaji: "tsu",
 		kind: "base",
 		row: "t",
 		col: "u",
-		romaji: "tsu",
-		hira: "つ",
-		kata: "ツ",
-		notes: "spelling: tu → tsu"
+		hiragana: { symbol: "つ", kvg: "03064" },
+		katakana: { symbol: "ツ", kvg: "030C4" }
 	},
-	{ id: "base:te", kind: "base", row: "t", col: "e", romaji: "te", hira: "て", kata: "テ" },
-	{ id: "base:to", kind: "base", row: "t", col: "o", romaji: "to", hira: "と", kata: "ト" },
-
-	{ id: "base:na", kind: "base", row: "n", col: "a", romaji: "na", hira: "な", kata: "ナ" },
-	{ id: "base:ni", kind: "base", row: "n", col: "i", romaji: "ni", hira: "に", kata: "ニ" },
-	{ id: "base:nu", kind: "base", row: "n", col: "u", romaji: "nu", hira: "ぬ", kata: "ヌ" },
-	{ id: "base:ne", kind: "base", row: "n", col: "e", romaji: "ne", hira: "ね", kata: "ネ" },
-	{ id: "base:no", kind: "base", row: "n", col: "o", romaji: "no", hira: "の", kata: "ノ" },
-
-	{ id: "base:ha", kind: "base", row: "h", col: "a", romaji: "ha", hira: "は", kata: "ハ" },
-	{ id: "base:hi", kind: "base", row: "h", col: "i", romaji: "hi", hira: "ひ", kata: "ヒ" },
 	{
-		id: "base:fu",
+		romaji: "te",
+		kind: "base",
+		row: "t",
+		col: "e",
+		hiragana: { symbol: "て", kvg: "03066" },
+		katakana: { symbol: "テ", kvg: "030C6" }
+	},
+	{
+		romaji: "to",
+		kind: "base",
+		row: "t",
+		col: "o",
+		hiragana: { symbol: "と", kvg: "03068" },
+		katakana: { symbol: "ト", kvg: "030C8" }
+	},
+
+	{
+		romaji: "na",
+		kind: "base",
+		row: "n",
+		col: "a",
+		hiragana: { symbol: "な", kvg: "0306A" },
+		katakana: { symbol: "ナ", kvg: "030CA" }
+	},
+	{
+		romaji: "ni",
+		kind: "base",
+		row: "n",
+		col: "i",
+		hiragana: { symbol: "に", kvg: "0306B" },
+		katakana: { symbol: "ニ", kvg: "030CB" }
+	},
+	{
+		romaji: "nu",
+		kind: "base",
+		row: "n",
+		col: "u",
+		hiragana: { symbol: "ぬ", kvg: "0306C" },
+		katakana: { symbol: "ヌ", kvg: "030CC" }
+	},
+	{
+		romaji: "ne",
+		kind: "base",
+		row: "n",
+		col: "e",
+		hiragana: { symbol: "ね", kvg: "0306D" },
+		katakana: { symbol: "ネ", kvg: "030CD" }
+	},
+	{
+		romaji: "no",
+		kind: "base",
+		row: "n",
+		col: "o",
+		hiragana: { symbol: "の", kvg: "0306E" },
+		katakana: { symbol: "ノ", kvg: "030CE" }
+	},
+
+	{
+		romaji: "ha",
+		kind: "base",
+		row: "h",
+		col: "a",
+		hiragana: { symbol: "は", kvg: "0306F" },
+		katakana: { symbol: "ハ", kvg: "030CF" }
+	},
+	{
+		romaji: "hi",
+		kind: "base",
+		row: "h",
+		col: "i",
+		hiragana: { symbol: "ひ", kvg: "03072" },
+		katakana: { symbol: "ヒ", kvg: "030D2" }
+	},
+	{
+		romaji: "fu",
 		kind: "base",
 		row: "h",
 		col: "u",
-		romaji: "fu",
-		hira: "ふ",
-		kata: "フ",
-		notes: "spelling: hu → fu"
+		hiragana: { symbol: "ふ", kvg: "03075" },
+		katakana: { symbol: "フ", kvg: "030D5" }
 	},
-	{ id: "base:he", kind: "base", row: "h", col: "e", romaji: "he", hira: "へ", kata: "ヘ" },
-	{ id: "base:ho", kind: "base", row: "h", col: "o", romaji: "ho", hira: "ほ", kata: "ホ" },
-
-	{ id: "base:ma", kind: "base", row: "m", col: "a", romaji: "ma", hira: "ま", kata: "マ" },
-	{ id: "base:mi", kind: "base", row: "m", col: "i", romaji: "mi", hira: "み", kata: "ミ" },
-	{ id: "base:mu", kind: "base", row: "m", col: "u", romaji: "mu", hira: "む", kata: "ム" },
-	{ id: "base:me", kind: "base", row: "m", col: "e", romaji: "me", hira: "め", kata: "メ" },
-	{ id: "base:mo", kind: "base", row: "m", col: "o", romaji: "mo", hira: "も", kata: "モ" },
-
-	{ id: "base:ya", kind: "base", row: "y", col: "a", romaji: "ya", hira: "や", kata: "ヤ" },
-	{ id: "base:yu", kind: "base", row: "y", col: "u", romaji: "yu", hira: "ゆ", kata: "ユ" },
-	{ id: "base:yo", kind: "base", row: "y", col: "o", romaji: "yo", hira: "よ", kata: "ヨ" },
-
-	{ id: "base:ra", kind: "base", row: "r", col: "a", romaji: "ra", hira: "ら", kata: "ラ" },
-	{ id: "base:ri", kind: "base", row: "r", col: "i", romaji: "ri", hira: "り", kata: "リ" },
-	{ id: "base:ru", kind: "base", row: "r", col: "u", romaji: "ru", hira: "る", kata: "ル" },
-	{ id: "base:re", kind: "base", row: "r", col: "e", romaji: "re", hira: "れ", kata: "レ" },
-	{ id: "base:ro", kind: "base", row: "r", col: "o", romaji: "ro", hira: "ろ", kata: "ロ" },
-
-	{ id: "base:wa", kind: "base", row: "w", col: "a", romaji: "wa", hira: "わ", kata: "ワ" },
 	{
-		id: "base:wo",
+		romaji: "he",
+		kind: "base",
+		row: "h",
+		col: "e",
+		hiragana: { symbol: "へ", kvg: "03078" },
+		katakana: { symbol: "ヘ", kvg: "030D8" }
+	},
+	{
+		romaji: "ho",
+		kind: "base",
+		row: "h",
+		col: "o",
+		hiragana: { symbol: "ほ", kvg: "0307B" },
+		katakana: { symbol: "ホ", kvg: "030DB" }
+	},
+
+	{
+		romaji: "ma",
+		kind: "base",
+		row: "m",
+		col: "a",
+		hiragana: { symbol: "ま", kvg: "0307E" },
+		katakana: { symbol: "マ", kvg: "030DE" }
+	},
+	{
+		romaji: "mi",
+		kind: "base",
+		row: "m",
+		col: "i",
+		hiragana: { symbol: "み", kvg: "0307F" },
+		katakana: { symbol: "ミ", kvg: "030DF" }
+	},
+	{
+		romaji: "mu",
+		kind: "base",
+		row: "m",
+		col: "u",
+		hiragana: { symbol: "む", kvg: "03080" },
+		katakana: { symbol: "ム", kvg: "030E0" }
+	},
+	{
+		romaji: "me",
+		kind: "base",
+		row: "m",
+		col: "e",
+		hiragana: { symbol: "め", kvg: "03081" },
+		katakana: { symbol: "メ", kvg: "030E1" }
+	},
+	{
+		romaji: "mo",
+		kind: "base",
+		row: "m",
+		col: "o",
+		hiragana: { symbol: "も", kvg: "03082" },
+		katakana: { symbol: "モ", kvg: "030E2" }
+	},
+
+	{
+		romaji: "ya",
+		kind: "base",
+		row: "y",
+		col: "a",
+		hiragana: { symbol: "や", kvg: "03084" },
+		katakana: { symbol: "ヤ", kvg: "030E4" }
+	},
+	{
+		romaji: "yu",
+		kind: "base",
+		row: "y",
+		col: "u",
+		hiragana: { symbol: "ゆ", kvg: "03086" },
+		katakana: { symbol: "ユ", kvg: "030E6" }
+	},
+	{
+		romaji: "yo",
+		kind: "base",
+		row: "y",
+		col: "o",
+		hiragana: { symbol: "よ", kvg: "03088" },
+		katakana: { symbol: "ヨ", kvg: "030E8" }
+	},
+
+	{
+		romaji: "ra",
+		kind: "base",
+		row: "r",
+		col: "a",
+		hiragana: { symbol: "ら", kvg: "03089" },
+		katakana: { symbol: "ラ", kvg: "030E9" }
+	},
+	{
+		romaji: "ri",
+		kind: "base",
+		row: "r",
+		col: "i",
+		hiragana: { symbol: "り", kvg: "0308A" },
+		katakana: { symbol: "リ", kvg: "030EA" }
+	},
+	{
+		romaji: "ru",
+		kind: "base",
+		row: "r",
+		col: "u",
+		hiragana: { symbol: "る", kvg: "0308B" },
+		katakana: { symbol: "ル", kvg: "030EB" }
+	},
+	{
+		romaji: "re",
+		kind: "base",
+		row: "r",
+		col: "e",
+		hiragana: { symbol: "れ", kvg: "0308C" },
+		katakana: { symbol: "レ", kvg: "030EC" }
+	},
+	{
+		romaji: "ro",
+		kind: "base",
+		row: "r",
+		col: "o",
+		hiragana: { symbol: "ろ", kvg: "0308D" },
+		katakana: { symbol: "ロ", kvg: "030ED" }
+	},
+
+	{
+		romaji: "wa",
+		kind: "base",
+		row: "w",
+		col: "a",
+		hiragana: { symbol: "わ", kvg: "0308F" },
+		katakana: { symbol: "ワ", kvg: "030EF" }
+	},
+	{
+		romaji: "wo",
 		kind: "base",
 		row: "w",
 		col: "o",
-		romaji: "wo",
-		hira: "を",
-		kata: "ヲ",
-		notes: 'often pronounced "o"'
+		hiragana: { symbol: "を", kvg: "03092" },
+		katakana: { symbol: "ヲ", kvg: "030F2" }
 	},
 
-	{ id: "base:n", kind: "base", row: "other", col: "a", romaji: "n", hira: "ん", kata: "ン" },
-
-	// =========================
-	// DAKUTEN
-	// id matches your example: dakuten:ka, dakuten:ki ...
-	// baseKey points to underlying unvoiced kana
-	// =========================
 	{
-		id: "dakuten:ka",
-		kind: "dakuten",
-		row: "k",
+		romaji: "n",
+		kind: "base",
+		row: "other",
 		col: "a",
+		hiragana: { symbol: "ん", kvg: "03093" },
+		katakana: { symbol: "ン", kvg: "030F3" }
+	},
+
+	// ===== DAKUTEN =====
+	{
 		romaji: "ga",
-		baseKey: "ka",
-		hira: "が",
-		kata: "ガ"
-	},
-	{
-		id: "dakuten:ki",
 		kind: "dakuten",
 		row: "k",
-		col: "i",
+		col: "a",
+		hiragana: { symbol: "が", kvg: "0304C" },
+		katakana: { symbol: "ガ", kvg: "030AC" }
+	},
+	{
 		romaji: "gi",
-		baseKey: "ki",
-		hira: "ぎ",
-		kata: "ギ"
-	},
-	{
-		id: "dakuten:ku",
 		kind: "dakuten",
 		row: "k",
-		col: "u",
+		col: "i",
+		hiragana: { symbol: "ぎ", kvg: "0304E" },
+		katakana: { symbol: "ギ", kvg: "030AE" }
+	},
+	{
 		romaji: "gu",
-		baseKey: "ku",
-		hira: "ぐ",
-		kata: "グ"
-	},
-	{
-		id: "dakuten:ke",
 		kind: "dakuten",
 		row: "k",
-		col: "e",
+		col: "u",
+		hiragana: { symbol: "ぐ", kvg: "03050" },
+		katakana: { symbol: "グ", kvg: "030B0" }
+	},
+	{
 		romaji: "ge",
-		baseKey: "ke",
-		hira: "げ",
-		kata: "ゲ"
-	},
-	{
-		id: "dakuten:ko",
 		kind: "dakuten",
 		row: "k",
-		col: "o",
+		col: "e",
+		hiragana: { symbol: "げ", kvg: "03052" },
+		katakana: { symbol: "ゲ", kvg: "030B2" }
+	},
+	{
 		romaji: "go",
-		baseKey: "ko",
-		hira: "ご",
-		kata: "ゴ"
+		kind: "dakuten",
+		row: "k",
+		col: "o",
+		hiragana: { symbol: "ご", kvg: "03054" },
+		katakana: { symbol: "ゴ", kvg: "030B4" }
 	},
 
 	{
-		id: "dakuten:sa",
-		kind: "dakuten",
-		row: "s",
-		col: "a",
 		romaji: "za",
-		baseKey: "sa",
-		hira: "ざ",
-		kata: "ザ"
+		kind: "dakuten",
+		row: "s",
+		col: "a",
+		hiragana: { symbol: "ざ", kvg: "03056" },
+		katakana: { symbol: "ザ", kvg: "030B6" }
 	},
 	{
-		id: "dakuten:shi",
+		romaji: "ji",
 		kind: "dakuten",
 		row: "s",
 		col: "i",
-		romaji: "ji",
-		baseKey: "shi",
-		hira: "じ",
-		kata: "ジ",
-		notes: 'also "zi" in some systems'
+		hiragana: { symbol: "じ", kvg: "03058" },
+		katakana: { symbol: "ジ", kvg: "030B8" }
 	},
 	{
-		id: "dakuten:su",
+		romaji: "zu",
 		kind: "dakuten",
 		row: "s",
 		col: "u",
-		romaji: "zu",
-		baseKey: "su",
-		hira: "ず",
-		kata: "ズ"
+		hiragana: { symbol: "ず", kvg: "0305A" },
+		katakana: { symbol: "ズ", kvg: "030BA" }
 	},
 	{
-		id: "dakuten:se",
-		kind: "dakuten",
-		row: "s",
-		col: "e",
 		romaji: "ze",
-		baseKey: "se",
-		hira: "ぜ",
-		kata: "ゼ"
-	},
-	{
-		id: "dakuten:so",
 		kind: "dakuten",
 		row: "s",
-		col: "o",
+		col: "e",
+		hiragana: { symbol: "ぜ", kvg: "0305C" },
+		katakana: { symbol: "ゼ", kvg: "030BC" }
+	},
+	{
 		romaji: "zo",
-		baseKey: "so",
-		hira: "ぞ",
-		kata: "ゾ"
+		kind: "dakuten",
+		row: "s",
+		col: "o",
+		hiragana: { symbol: "ぞ", kvg: "0305E" },
+		katakana: { symbol: "ゾ", kvg: "030BE" }
 	},
 
 	{
-		id: "dakuten:ta",
-		kind: "dakuten",
-		row: "t",
-		col: "a",
 		romaji: "da",
-		baseKey: "ta",
-		hira: "だ",
-		kata: "ダ"
-	},
-	{
-		id: "dakuten:chi",
 		kind: "dakuten",
 		row: "t",
-		col: "i",
+		col: "a",
+		hiragana: { symbol: "だ", kvg: "03060" },
+		katakana: { symbol: "ダ", kvg: "030C0" }
+	},
+	{
 		romaji: "ji",
-		baseKey: "chi",
-		hira: "ぢ",
-		kata: "ヂ",
-		notes: "rare; often same sound as じ"
-	},
-	{
-		id: "dakuten:tsu",
 		kind: "dakuten",
 		row: "t",
-		col: "u",
+		col: "i",
+		hiragana: { symbol: "ぢ", kvg: "03062" },
+		katakana: { symbol: "ヂ", kvg: "030C2" }
+	},
+	{
 		romaji: "zu",
-		baseKey: "tsu",
-		hira: "づ",
-		kata: "ヅ",
-		notes: "rare; often same sound as ず"
-	},
-	{
-		id: "dakuten:te",
 		kind: "dakuten",
 		row: "t",
-		col: "e",
+		col: "u",
+		hiragana: { symbol: "づ", kvg: "03065" },
+		katakana: { symbol: "ヅ", kvg: "030C5" }
+	},
+	{
 		romaji: "de",
-		baseKey: "te",
-		hira: "で",
-		kata: "デ"
-	},
-	{
-		id: "dakuten:to",
 		kind: "dakuten",
 		row: "t",
-		col: "o",
+		col: "e",
+		hiragana: { symbol: "で", kvg: "03067" },
+		katakana: { symbol: "デ", kvg: "030C7" }
+	},
+	{
 		romaji: "do",
-		baseKey: "to",
-		hira: "ど",
-		kata: "ド"
+		kind: "dakuten",
+		row: "t",
+		col: "o",
+		hiragana: { symbol: "ど", kvg: "03069" },
+		katakana: { symbol: "ド", kvg: "030C9" }
 	},
 
 	{
-		id: "dakuten:ha",
-		kind: "dakuten",
-		row: "h",
-		col: "a",
 		romaji: "ba",
-		baseKey: "ha",
-		hira: "ば",
-		kata: "バ"
-	},
-	{
-		id: "dakuten:hi",
 		kind: "dakuten",
 		row: "h",
-		col: "i",
+		col: "a",
+		hiragana: { symbol: "ば", kvg: "03070" },
+		katakana: { symbol: "バ", kvg: "030D0" }
+	},
+	{
 		romaji: "bi",
-		baseKey: "hi",
-		hira: "び",
-		kata: "ビ"
+		kind: "dakuten",
+		row: "h",
+		col: "i",
+		hiragana: { symbol: "び", kvg: "03073" },
+		katakana: { symbol: "ビ", kvg: "030D3" }
 	},
 	{
-		id: "dakuten:fu",
+		romaji: "bu",
 		kind: "dakuten",
 		row: "h",
 		col: "u",
-		romaji: "bu",
-		baseKey: "fu",
-		hira: "ぶ",
-		kata: "ブ"
+		hiragana: { symbol: "ぶ", kvg: "03076" },
+		katakana: { symbol: "ブ", kvg: "030D6" }
 	},
 	{
-		id: "dakuten:he",
+		romaji: "be",
 		kind: "dakuten",
 		row: "h",
 		col: "e",
-		romaji: "be",
-		baseKey: "he",
-		hira: "べ",
-		kata: "ベ"
+		hiragana: { symbol: "べ", kvg: "03079" },
+		katakana: { symbol: "ベ", kvg: "030D9" }
 	},
 	{
-		id: "dakuten:ho",
+		romaji: "bo",
 		kind: "dakuten",
 		row: "h",
 		col: "o",
-		romaji: "bo",
-		baseKey: "ho",
-		hira: "ぼ",
-		kata: "ボ"
+		hiragana: { symbol: "ぼ", kvg: "0307C" },
+		katakana: { symbol: "ボ", kvg: "030DC" }
 	},
 
-	// =========================
-	// HANDAKUTEN
-	// =========================
+	// ===== HANDAKUTEN =====
 	{
-		id: "handakuten:ha",
+		romaji: "pa",
 		kind: "handakuten",
 		row: "h",
 		col: "a",
-		romaji: "pa",
-		baseKey: "ha",
-		hira: "ぱ",
-		kata: "パ"
+		hiragana: { symbol: "ぱ", kvg: "03071" },
+		katakana: { symbol: "パ", kvg: "030D1" }
 	},
 	{
-		id: "handakuten:hi",
+		romaji: "pi",
 		kind: "handakuten",
 		row: "h",
 		col: "i",
-		romaji: "pi",
-		baseKey: "hi",
-		hira: "ぴ",
-		kata: "ピ"
+		hiragana: { symbol: "ぴ", kvg: "03074" },
+		katakana: { symbol: "ピ", kvg: "030D4" }
 	},
 	{
-		id: "handakuten:fu",
+		romaji: "pu",
 		kind: "handakuten",
 		row: "h",
 		col: "u",
-		romaji: "pu",
-		baseKey: "fu",
-		hira: "ぷ",
-		kata: "プ"
+		hiragana: { symbol: "ぷ", kvg: "03077" },
+		katakana: { symbol: "プ", kvg: "030D7" }
 	},
 	{
-		id: "handakuten:he",
+		romaji: "pe",
 		kind: "handakuten",
 		row: "h",
 		col: "e",
-		romaji: "pe",
-		baseKey: "he",
-		hira: "ぺ",
-		kata: "ペ"
+		hiragana: { symbol: "ぺ", kvg: "0307A" },
+		katakana: { symbol: "ペ", kvg: "030DA" }
 	},
 	{
-		id: "handakuten:ho",
+		romaji: "po",
 		kind: "handakuten",
 		row: "h",
 		col: "o",
-		romaji: "po",
-		baseKey: "ho",
-		hira: "ぽ",
-		kata: "ポ"
+		hiragana: { symbol: "ぽ", kvg: "0307D" },
+		katakana: { symbol: "ポ", kvg: "030DD" }
 	},
 
-	// =========================
-	// YŌON (common)
-	// ids use baseKey + +ya/yu/yo so it stays deterministic
-	// =========================
+	// ===== YŌON =====
 	{
-		id: "yoon:ki+ya",
-		kind: "yoon",
-		row: "k",
-		col: "a",
 		romaji: "kya",
-		baseKey: "ki",
-		hira: "きゃ",
-		kata: "キャ"
-	},
-	{
-		id: "yoon:ki+yu",
 		kind: "yoon",
 		row: "k",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "きゃ", kvg: "0304D-03083" },
+		katakana: { symbol: "キャ", kvg: "030AD-030E3" }
+	},
+	{
 		romaji: "kyu",
-		baseKey: "ki",
-		hira: "きゅ",
-		kata: "キュ"
+		kind: "yoon",
+		row: "k",
+		col: "u",
+		hiragana: { symbol: "きゅ", kvg: "0304D-03085" },
+		katakana: { symbol: "キュ", kvg: "030AD-030E5" }
 	},
 	{
-		id: "yoon:ki+yo",
+		romaji: "kyo",
 		kind: "yoon",
 		row: "k",
 		col: "o",
-		romaji: "kyo",
-		baseKey: "ki",
-		hira: "きょ",
-		kata: "キョ"
+		hiragana: { symbol: "きょ", kvg: "0304D-03087" },
+		katakana: { symbol: "キョ", kvg: "030AD-030E7" }
 	},
 
 	{
-		id: "yoon:shi+ya",
-		kind: "yoon",
-		row: "s",
-		col: "a",
 		romaji: "sha",
-		baseKey: "shi",
-		hira: "しゃ",
-		kata: "シャ"
-	},
-	{
-		id: "yoon:shi+yu",
 		kind: "yoon",
 		row: "s",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "しゃ", kvg: "03057-03083" },
+		katakana: { symbol: "シャ", kvg: "030B7-030E3" }
+	},
+	{
 		romaji: "shu",
-		baseKey: "shi",
-		hira: "しゅ",
-		kata: "シュ"
+		kind: "yoon",
+		row: "s",
+		col: "u",
+		hiragana: { symbol: "しゅ", kvg: "03057-03085" },
+		katakana: { symbol: "シュ", kvg: "030B7-030E5" }
 	},
 	{
-		id: "yoon:shi+yo",
+		romaji: "sho",
 		kind: "yoon",
 		row: "s",
 		col: "o",
-		romaji: "sho",
-		baseKey: "shi",
-		hira: "しょ",
-		kata: "ショ"
+		hiragana: { symbol: "しょ", kvg: "03057-03087" },
+		katakana: { symbol: "ショ", kvg: "030B7-030E7" }
 	},
 
 	{
-		id: "yoon:chi+ya",
-		kind: "yoon",
-		row: "t",
-		col: "a",
 		romaji: "cha",
-		baseKey: "chi",
-		hira: "ちゃ",
-		kata: "チャ"
-	},
-	{
-		id: "yoon:chi+yu",
 		kind: "yoon",
 		row: "t",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "ちゃ", kvg: "03061-03083" },
+		katakana: { symbol: "チャ", kvg: "030C1-030E3" }
+	},
+	{
 		romaji: "chu",
-		baseKey: "chi",
-		hira: "ちゅ",
-		kata: "チュ"
+		kind: "yoon",
+		row: "t",
+		col: "u",
+		hiragana: { symbol: "ちゅ", kvg: "03061-03085" },
+		katakana: { symbol: "チュ", kvg: "030C1-030E5" }
 	},
 	{
-		id: "yoon:chi+yo",
+		romaji: "cho",
 		kind: "yoon",
 		row: "t",
 		col: "o",
-		romaji: "cho",
-		baseKey: "chi",
-		hira: "ちょ",
-		kata: "チョ"
+		hiragana: { symbol: "ちょ", kvg: "03061-03087" },
+		katakana: { symbol: "チョ", kvg: "030C1-030E7" }
 	},
 
 	{
-		id: "yoon:ni+ya",
-		kind: "yoon",
-		row: "n",
-		col: "a",
 		romaji: "nya",
-		baseKey: "ni",
-		hira: "にゃ",
-		kata: "ニャ"
-	},
-	{
-		id: "yoon:ni+yu",
 		kind: "yoon",
 		row: "n",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "にゃ", kvg: "0306B-03083" },
+		katakana: { symbol: "ニャ", kvg: "030CB-030E3" }
+	},
+	{
 		romaji: "nyu",
-		baseKey: "ni",
-		hira: "にゅ",
-		kata: "ニュ"
+		kind: "yoon",
+		row: "n",
+		col: "u",
+		hiragana: { symbol: "にゅ", kvg: "0306B-03085" },
+		katakana: { symbol: "ニュ", kvg: "030CB-030E5" }
 	},
 	{
-		id: "yoon:ni+yo",
+		romaji: "nyo",
 		kind: "yoon",
 		row: "n",
 		col: "o",
-		romaji: "nyo",
-		baseKey: "ni",
-		hira: "にょ",
-		kata: "ニョ"
+		hiragana: { symbol: "にょ", kvg: "0306B-03087" },
+		katakana: { symbol: "ニョ", kvg: "030CB-030E7" }
 	},
 
 	{
-		id: "yoon:hi+ya",
-		kind: "yoon",
-		row: "h",
-		col: "a",
 		romaji: "hya",
-		baseKey: "hi",
-		hira: "ひゃ",
-		kata: "ヒャ"
-	},
-	{
-		id: "yoon:hi+yu",
 		kind: "yoon",
 		row: "h",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "ひゃ", kvg: "03072-03083" },
+		katakana: { symbol: "ヒャ", kvg: "030D2-030E3" }
+	},
+	{
 		romaji: "hyu",
-		baseKey: "hi",
-		hira: "ひゅ",
-		kata: "ヒュ"
+		kind: "yoon",
+		row: "h",
+		col: "u",
+		hiragana: { symbol: "ひゅ", kvg: "03072-03085" },
+		katakana: { symbol: "ヒュ", kvg: "030D2-030E5" }
 	},
 	{
-		id: "yoon:hi+yo",
+		romaji: "hyo",
 		kind: "yoon",
 		row: "h",
 		col: "o",
-		romaji: "hyo",
-		baseKey: "hi",
-		hira: "ひょ",
-		kata: "ヒョ"
+		hiragana: { symbol: "ひょ", kvg: "03072-03087" },
+		katakana: { symbol: "ヒョ", kvg: "030D2-030E7" }
 	},
 
 	{
-		id: "yoon:mi+ya",
-		kind: "yoon",
-		row: "m",
-		col: "a",
 		romaji: "mya",
-		baseKey: "mi",
-		hira: "みゃ",
-		kata: "ミャ"
-	},
-	{
-		id: "yoon:mi+yu",
 		kind: "yoon",
 		row: "m",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "みゃ", kvg: "0307F-03083" },
+		katakana: { symbol: "ミャ", kvg: "030DF-030E3" }
+	},
+	{
 		romaji: "myu",
-		baseKey: "mi",
-		hira: "みゅ",
-		kata: "ミュ"
+		kind: "yoon",
+		row: "m",
+		col: "u",
+		hiragana: { symbol: "みゅ", kvg: "0307F-03085" },
+		katakana: { symbol: "ミュ", kvg: "030DF-030E5" }
 	},
 	{
-		id: "yoon:mi+yo",
+		romaji: "myo",
 		kind: "yoon",
 		row: "m",
 		col: "o",
-		romaji: "myo",
-		baseKey: "mi",
-		hira: "みょ",
-		kata: "ミョ"
+		hiragana: { symbol: "みょ", kvg: "0307F-03087" },
+		katakana: { symbol: "ミョ", kvg: "030DF-030E7" }
 	},
 
 	{
-		id: "yoon:ri+ya",
-		kind: "yoon",
-		row: "r",
-		col: "a",
 		romaji: "rya",
-		baseKey: "ri",
-		hira: "りゃ",
-		kata: "リャ"
-	},
-	{
-		id: "yoon:ri+yu",
 		kind: "yoon",
 		row: "r",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "りゃ", kvg: "0308A-03083" },
+		katakana: { symbol: "リャ", kvg: "030EA-030E3" }
+	},
+	{
 		romaji: "ryu",
-		baseKey: "ri",
-		hira: "りゅ",
-		kata: "リュ"
+		kind: "yoon",
+		row: "r",
+		col: "u",
+		hiragana: { symbol: "りゅ", kvg: "0308A-03085" },
+		katakana: { symbol: "リュ", kvg: "030EA-030E5" }
 	},
 	{
-		id: "yoon:ri+yo",
+		romaji: "ryo",
 		kind: "yoon",
 		row: "r",
 		col: "o",
-		romaji: "ryo",
-		baseKey: "ri",
-		hira: "りょ",
-		kata: "リョ"
+		hiragana: { symbol: "りょ", kvg: "0308A-03087" },
+		katakana: { symbol: "リョ", kvg: "030EA-030E7" }
 	},
 
 	{
-		id: "yoon:gi+ya",
-		kind: "yoon",
-		row: "g",
-		col: "a",
 		romaji: "gya",
-		baseKey: "gi",
-		hira: "ぎゃ",
-		kata: "ギャ"
-	},
-	{
-		id: "yoon:gi+yu",
 		kind: "yoon",
 		row: "g",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "ぎゃ", kvg: "0304E-03083" },
+		katakana: { symbol: "ギャ", kvg: "030AE-030E3" }
+	},
+	{
 		romaji: "gyu",
-		baseKey: "gi",
-		hira: "ぎゅ",
-		kata: "ギュ"
+		kind: "yoon",
+		row: "g",
+		col: "u",
+		hiragana: { symbol: "ぎゅ", kvg: "0304E-03085" },
+		katakana: { symbol: "ギュ", kvg: "030AE-030E5" }
 	},
 	{
-		id: "yoon:gi+yo",
+		romaji: "gyo",
 		kind: "yoon",
 		row: "g",
 		col: "o",
-		romaji: "gyo",
-		baseKey: "gi",
-		hira: "ぎょ",
-		kata: "ギョ"
+		hiragana: { symbol: "ぎょ", kvg: "0304E-03087" },
+		katakana: { symbol: "ギョ", kvg: "030AE-030E7" }
 	},
 
 	{
-		id: "yoon:ji+ya",
-		kind: "yoon",
-		row: "z",
-		col: "a",
 		romaji: "ja",
-		baseKey: "ji",
-		hira: "じゃ",
-		kata: "ジャ"
-	},
-	{
-		id: "yoon:ji+yu",
 		kind: "yoon",
 		row: "z",
-		col: "u",
+		col: "a",
+		hiragana: { symbol: "じゃ", kvg: "03058-03083" },
+		katakana: { symbol: "ジャ", kvg: "030B8-030E3" }
+	},
+	{
 		romaji: "ju",
-		baseKey: "ji",
-		hira: "じゅ",
-		kata: "ジュ"
+		kind: "yoon",
+		row: "z",
+		col: "u",
+		hiragana: { symbol: "じゅ", kvg: "03058-03085" },
+		katakana: { symbol: "ジュ", kvg: "030B8-030E5" }
 	},
 	{
-		id: "yoon:ji+yo",
+		romaji: "jo",
 		kind: "yoon",
 		row: "z",
 		col: "o",
-		romaji: "jo",
-		baseKey: "ji",
-		hira: "じょ",
-		kata: "ジョ"
+		hiragana: { symbol: "じょ", kvg: "03058-03087" },
+		katakana: { symbol: "ジョ", kvg: "030B8-030E7" }
 	},
 
 	{
-		id: "yoon:bi+ya",
-		kind: "yoon",
-		row: "b",
-		col: "a",
 		romaji: "bya",
-		baseKey: "bi",
-		hira: "びゃ",
-		kata: "ビャ"
+		kind: "yoon",
+		row: "b",
+		col: "a",
+		hiragana: { symbol: "びゃ", kvg: "03073-03083" },
+		katakana: { symbol: "ビャ", kvg: "030D3-030E3" }
 	},
 	{
-		id: "yoon:bi+yu",
+		romaji: "byu",
 		kind: "yoon",
 		row: "b",
 		col: "u",
-		romaji: "byu",
-		baseKey: "bi",
-		hira: "びゅ",
-		kata: "ビュ"
+		hiragana: { symbol: "びゅ", kvg: "03073-03085" },
+		katakana: { symbol: "ビュ", kvg: "030D3-030E5" }
 	},
 	{
-		id: "yoon:bi+yo",
+		romaji: "byo",
 		kind: "yoon",
 		row: "b",
 		col: "o",
-		romaji: "byo",
-		baseKey: "bi",
-		hira: "びょ",
-		kata: "ビョ"
+		hiragana: { symbol: "びょ", kvg: "03073-03087" },
+		katakana: { symbol: "ビョ", kvg: "030D3-030E7" }
 	},
 
 	{
-		id: "yoon:pi+ya",
+		romaji: "pya",
 		kind: "yoon",
 		row: "p",
 		col: "a",
-		romaji: "pya",
-		baseKey: "pi",
-		hira: "ぴゃ",
-		kata: "ピャ"
+		hiragana: { symbol: "ぴゃ", kvg: "03074-03083" },
+		katakana: { symbol: "ピャ", kvg: "030D4-030E3" }
 	},
 	{
-		id: "yoon:pi+yu",
+		romaji: "pyu",
 		kind: "yoon",
 		row: "p",
 		col: "u",
-		romaji: "pyu",
-		baseKey: "pi",
-		hira: "ぴゅ",
-		kata: "ピュ"
+		hiragana: { symbol: "ぴゅ", kvg: "03074-03085" },
+		katakana: { symbol: "ピュ", kvg: "030D4-030E5" }
 	},
 	{
-		id: "yoon:pi+yo",
+		romaji: "pyo",
 		kind: "yoon",
 		row: "p",
 		col: "o",
-		romaji: "pyo",
-		baseKey: "pi",
-		hira: "ぴょ",
-		kata: "ピョ"
+		hiragana: { symbol: "ぴょ", kvg: "03074-03087" },
+		katakana: { symbol: "ピョ", kvg: "030D4-030E7" }
 	},
 
-	// =========================
-	// SMALL
-	// =========================
+	// ===== SMALL =====
 	{
-		id: "small:a",
-		kind: "small",
-		row: "small",
-		col: "none",
 		romaji: "a",
-		hira: "ぁ",
-		kata: "ァ"
-	},
-	{
-		id: "small:i",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ぁ", kvg: "03041" },
+		katakana: { symbol: "ァ", kvg: "030A1" }
+	},
+	{
 		romaji: "i",
-		hira: "ぃ",
-		kata: "ィ"
-	},
-	{
-		id: "small:u",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ぃ", kvg: "03043" },
+		katakana: { symbol: "ィ", kvg: "030A3" }
+	},
+	{
 		romaji: "u",
-		hira: "ぅ",
-		kata: "ゥ"
-	},
-	{
-		id: "small:e",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ぅ", kvg: "03045" },
+		katakana: { symbol: "ゥ", kvg: "030A5" }
+	},
+	{
 		romaji: "e",
-		hira: "ぇ",
-		kata: "ェ"
-	},
-	{
-		id: "small:o",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ぇ", kvg: "03047" },
+		katakana: { symbol: "ェ", kvg: "030A7" }
+	},
+	{
 		romaji: "o",
-		hira: "ぉ",
-		kata: "ォ"
-	},
-	{
-		id: "small:ya",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ぉ", kvg: "03049" },
+		katakana: { symbol: "ォ", kvg: "030A9" }
+	},
+	{
 		romaji: "ya",
-		hira: "ゃ",
-		kata: "ャ"
-	},
-	{
-		id: "small:yu",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ゃ", kvg: "03083" },
+		katakana: { symbol: "ャ", kvg: "030E3" }
+	},
+	{
 		romaji: "yu",
-		hira: "ゅ",
-		kata: "ュ"
-	},
-	{
-		id: "small:yo",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ゅ", kvg: "03085" },
+		katakana: { symbol: "ュ", kvg: "030E5" }
+	},
+	{
 		romaji: "yo",
-		hira: "ょ",
-		kata: "ョ"
-	},
-	{
-		id: "small:tsu",
 		kind: "small",
 		row: "small",
 		col: "none",
+		hiragana: { symbol: "ょ", kvg: "03087" },
+		katakana: { symbol: "ョ", kvg: "030E7" }
+	},
+	{
 		romaji: "tsu",
-		hira: "っ",
-		kata: "ッ",
-		notes: "sokuon (gemination)"
+		kind: "small",
+		row: "small",
+		col: "none",
+		hiragana: { symbol: "っ", kvg: "03063" },
+		katakana: { symbol: "ッ", kvg: "030C3" }
 	}
-];
+] as const;

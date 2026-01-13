@@ -25,7 +25,7 @@
 	// }
 
 	function charOf(c: KanaCell, script: KanaScript) {
-		return script === "hiragana" ? c.hira : c.kata;
+		return script === "hiragana" ? c.hiragana.symbol : c.katakana.symbol;
 	}
 
 	function buildGojuonGrid(kind: KanaKind, rows: KanaRow[]) {
@@ -131,7 +131,7 @@
 		{/if}
 
 		<div class="gojuonGrid" aria-label={title}>
-			{#each cells as cell, i (cell?.id ?? `empty:${i}`)}
+			{#each cells as cell, i (i)}
 				{#if cell && script}
 					<SymbolCard
 						selected={false}
