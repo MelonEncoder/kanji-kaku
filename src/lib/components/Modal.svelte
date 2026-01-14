@@ -86,7 +86,7 @@
 		};
 	});
 
-	// Focus management: save active element on open, focus panel contents; restore on close
+	// save active element on open, focus panel contents, restore on close
 	$effect(() => {
 		if (!open) return;
 

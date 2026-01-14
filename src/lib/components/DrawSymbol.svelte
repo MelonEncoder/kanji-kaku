@@ -57,10 +57,8 @@
 	// control
 	let activeIndex: number = $state(0);
 
-	// references to the actual rendered <path> nodes
 	let kanjiPathElements: (SVGPathElement | null)[] = $state([]);
 	let strokePathElements: (SVGPathElement | null)[] = $state([]);
-
 	let canvas: HTMLCanvasElement;
 	let stageElement: HTMLDivElement;
 
@@ -101,8 +99,6 @@
 	//  completedSymbol = false;
 	// }
 
-	// DRAWING FUNCTIONS
-	// Gets the point on the canvas even when scaled.
 	function getCanvasPoint(e: PointerEvent): { x: number; y: number } {
 		const rect = canvas.getBoundingClientRect();
 		const scaleX = canvas.width / rect.width;
@@ -130,7 +126,7 @@
 		const ptOffset = 15;
 		const lenOffset = 8;
 
-		// Start point condition
+		// start point condition
 		if (
 			sPts.start.x > kPts.start.x + ptOffset ||
 			sPts.start.y > kPts.start.y + ptOffset ||
@@ -139,7 +135,7 @@
 		) {
 			return false;
 		}
-		// End point condition
+		// end point condition
 		if (
 			sPts.end.x > kPts.end.x + ptOffset ||
 			sPts.end.y > kPts.end.y + ptOffset ||
@@ -148,7 +144,7 @@
 		) {
 			return false;
 		}
-		// Length condition
+		// length condition
 		if (sLen > kLen + lenOffset || sLen < kLen - lenOffset) {
 			return false;
 		}

@@ -1,5 +1,4 @@
 <script lang="ts">
-	// future: import { page } from '$app/stores';
 	import { resolve } from "$app/paths";
 </script>
 

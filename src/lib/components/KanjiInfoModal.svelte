@@ -54,7 +54,7 @@
 
 	<div class="body">
 		<div class="col">
-			<Animated {kanji} showControls={true} loop={true} />
+			<Animated symbol={kanji} showControls={true} loop={true} />
 		</div>
 
 		<div class="col details">
@@ -86,7 +86,6 @@
 					{/if}
 				</div>
 			</section>
-			<!-- Practice button lives UNDER Kun readings -->
 			<button class="practiceBtn" type="button" onclick={startPractice}>
 				<span class="cta">Practice</span>
 				<span class="arrow" aria-hidden="true">→</span>
@@ -177,6 +176,7 @@
 		grid-template-columns: 1fr 1fr;
 		gap: 1rem;
 		padding: 1rem;
+		background-color: var(--paper);
 	}
 
 	.col {
@@ -229,19 +229,17 @@
 		font-weight: 650;
 	}
 
-	/* --- Practice button --- */
 	.practiceBtn {
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 0.65rem;
 		color: white;
 		border-radius: calc(var(--radius-md) + 2px);
-		border: 2px solid rgba(255, 191, 203, 0.8);
-		background-color: tomato;
-		box-shadow: 0 10px 0 rgba(255, 191, 203, 0.8);
-		padding: 1.75rem 0.85rem;
+		border: 2px solid var(--light-orange);
+		background-color: var(--coral);
+		box-shadow: 0 4px 0 var(--light-orange);
+		padding: 1.75rem 1.5rem;
 		cursor: pointer;
 		margin-bottom: 10px;
 
@@ -253,15 +251,14 @@
 	}
 
 	.practiceBtn:hover {
-		border-color: var(--stroke-accent);
 		filter: saturate(1.05);
-		transform: translateY(-2px);
-		box-shadow: 0 12px 0 rgba(255, 191, 203, 0.8);
+		transform: translateY(-4px);
+		box-shadow: 0 8px 0 var(--light-orange);
 	}
 
 	.practiceBtn:active {
-		transform: translateY(6px);
-		box-shadow: 0 4px 0 rgba(255, 191, 203, 0.8);
+		transform: translateY(4px);
+		box-shadow: 0 0 0 var(--light-orange);
 	}
 
 	.practiceBtn:focus-visible {

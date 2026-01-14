@@ -2,7 +2,7 @@
 	import { onMount, tick } from "svelte";
 	import { loadKanjiVgSvg, symbolToKanjiVgCode } from "$lib/svg/loadKanjiVgSvg";
 
-	interface KanjiStroke {
+	interface symbolStroke {
 		id: string;
 		d: string;
 		length: number;
@@ -16,24 +16,22 @@
 		h: number;
 	}
 
-	// Keep it simple: a visual reference widget
 	let {
-		kanji,
+		symbol,
 		loop = true,
 		showControls = true
 	}: {
-		kanji: string;
+		symbol: string;
 		loop?: boolean;
 		showControls?: boolean;
 	} = $props();
 
-	let rawKanjiSvg = "";
+	let rawsymbolSvg = "";
 	let viewBox: ViewBox = $state({ x: 0, y: 0, w: 109, h: 109 });
-	let kanjiStrokes: KanjiStroke[] = $state([]);
+	let symbolStrokes: symbolStroke[] = $state([]);
 
 	let activeIndex = $state(0);
 
-	// Refs to the rendered <path> nodes so we can measure length
 	let pathElements: (SVGPathElement | null)[] = [];
 
 	// used to force-remount paths so CSS animations reliably restart
@@ -54,18 +52,18 @@
 
 	function resetToStart() {
 		activeIndex = 0;
-		kanjiStrokes = kanjiStrokes.map((s) => ({ ...s, completed: false }));
+		symbolStrokes = symbolStrokes.map((s) => ({ ...s, completed: false }));
 		runKey += 1;
 	}
 
 	function advance() {
-		if (!kanjiStrokes.length || !playing) return;
+		if (!symbolStrokes.length || !playing) return;
 
-		kanjiStrokes = kanjiStrokes.map((s, i) =>
+		symbolStrokes = symbolStrokes.map((s, i) =>
 			i === activeIndex ? { ...s, completed: true } : s
 		);
 
-		if (activeIndex < kanjiStrokes.length - 1) {
+		if (activeIndex < symbolStrokes.length - 1) {
 			activeIndex += 1;
 			return;
 		}
@@ -78,8 +76,8 @@
 	}
 
 	onMount(async () => {
-		rawKanjiSvg = await loadKanjiVgSvg(symbolToKanjiVgCode(kanji));
-		const svgDoc = new DOMParser().parseFromString(rawKanjiSvg, "image/svg+xml");
+		rawsymbolSvg = await loadKanjiVgSvg(symbolToKanjiVgCode(symbol));
+		const svgDoc = new DOMParser().parseFromString(rawsymbolSvg, "image/svg+xml");
 		viewBox = parseViewBox(svgDoc);
 
 		const paths = [...svgDoc.querySelectorAll("path")]
@@ -89,7 +87,7 @@
 			}))
 			.filter((p) => p.d);
 
-		kanjiStrokes = paths.map(({ id, d }) => ({
+		symbolStrokes = paths.map(({ id, d }) => ({
 			id,
 			d,
 			length: 0,
@@ -98,7 +96,7 @@
 
 		await tick();
 
-		kanjiStrokes = kanjiStrokes.map((stroke, i) => {
+		symbolStrokes = symbolStrokes.map((stroke, i) => {
 			const path = pathElements[i];
 			let len = 0;
 			try {
@@ -120,12 +118,12 @@
 			<h2>Stroke order</h2>
 			<p class="sub">Visual reference</p>
 		</div>
-		<div class="badge" aria-hidden="true">{kanji}</div>
+		<div class="badge" aria-hidden="true">{symbol}</div>
 	</header>
 
-	<div class="stage" role="img" aria-label={`Stroke order animation for ${kanji}`}>
+	<div class="stage" role="img" aria-label={`Stroke order animation for ${symbol}`}>
 		<svg
-			class="kanji-grid"
+			class="symbolGrid"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
 			aria-hidden="true"
 			xmlns="http://www.w3.org/2000/svg"
@@ -135,12 +133,12 @@
 		</svg>
 
 		<svg
-			class="kanji"
+			class="symbol"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
 			aria-hidden="true"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			{#each kanjiStrokes as stroke, i (stroke.id + "-" + runKey)}
+			{#each symbolStrokes as stroke, i (stroke.id + "-" + runKey)}
 				<path
 					bind:this={pathElements[i]}
 					d={stroke.d}
@@ -160,7 +158,7 @@
 	{#if showControls}
 		<div class="controls">
 			<p class="status">
-				Stroke {Math.min(activeIndex + 1, kanjiStrokes.length)} / {kanjiStrokes.length}
+				Stroke {Math.min(activeIndex + 1, symbolStrokes.length)} / {symbolStrokes.length}
 			</p>
 			<div>
 				<button type="button" onclick={toggle}>
@@ -173,12 +171,11 @@
 </section>
 
 <style>
-	/* Container card — matches the site’s “paper” system */
 	.wrap {
 		width: min(420px, 92vw);
 
 		border-radius: var(--radius-lg);
-		background: var(--paper-soft);
+		background: var(--paper);
 		border: 2px solid var(--stroke);
 
 		box-shadow: var(--shadow-soft);
@@ -225,7 +222,6 @@
 		overflow: visible;
 	}
 
-	/* Stage is a smaller “paper surface”, consistent with your practice stage */
 	.stage {
 		position: relative;
 		width: 100%;
@@ -239,7 +235,7 @@
 		overflow: hidden;
 	}
 
-	.kanji-grid {
+	.symbolGrid {
 		position: absolute;
 		inset: 0;
 		width: 100%;
@@ -247,7 +243,7 @@
 		opacity: 0.95;
 	}
 
-	.kanji-grid path {
+	.symbolGrid path {
 		fill: none;
 		stroke: rgba(36, 27, 26, 0.12);
 		stroke-width: 0.55;
@@ -256,43 +252,39 @@
 		stroke-dasharray: 2.5 2;
 	}
 
-	.kanji {
+	.symbol {
 		position: absolute;
 		inset: 0;
 		width: 100%;
 		height: 100%;
 	}
 
-	.kanji path {
+	.symbol path {
 		fill: none;
 		stroke-linecap: round;
 		stroke-linejoin: round;
 
-		/* dash trick for animating path */
+		/* used to animate strokes */
 		stroke-dasharray: var(--len) var(--len);
 		stroke-dashoffset: var(--len);
 	}
 
-	/* hidden future strokes */
-	.kanji path.hidden {
+	.symbol path.hidden {
 		opacity: 0;
 	}
 
-	/* completed strokes: subtle ink so the active stroke stands out */
-	.kanji path.completed {
+	.symbol path.completed {
 		opacity: 1;
-		stroke: rgba(36, 27, 26, 0.18);
+		stroke: var(--light-gray);
 		stroke-width: 3;
 		stroke-dashoffset: 0;
 		animation: none;
 	}
 
-	/* active stroke: coral guide + soft glow */
-	.kanji path.active {
+	.symbol path.active {
 		opacity: 1;
 		stroke: var(--coral);
 		stroke-width: 3.2;
-		filter: drop-shadow(0 2px 8px rgba(255, 92, 74, 0.16));
 		animation: draw var(--dur) linear forwards;
 	}
 
@@ -328,7 +320,6 @@
 		text-transform: uppercase;
 
 		cursor: pointer;
-		box-shadow: var(--shadow-soft);
 
 		transition:
 			transform 140ms ease,
@@ -346,7 +337,6 @@
 
 	button:active {
 		transform: translateY(-1px);
-		box-shadow: var(--shadow-soft);
 	}
 
 	button:focus-visible {

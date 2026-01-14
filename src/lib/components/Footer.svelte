@@ -1,7 +1,3 @@
-<script lang="ts">
-	// keep minimal; links can be swapped later
-</script>
-
 <footer class="site-footer">
 	<div class="inner">
 		<p class="copyright">© 2026 Kanji Notebook.</p>
@@ -37,7 +33,6 @@
 		padding: 1.25rem 2rem;
 	}
 
-	/* keep it quiet, let layout globals handle font + color */
 	.copyright {
 		margin: 0;
 		font-size: 0.95rem;

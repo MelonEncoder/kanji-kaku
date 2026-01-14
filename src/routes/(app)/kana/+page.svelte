@@ -137,6 +137,7 @@
 						selected={false}
 						symbol={charOf(cell, script)}
 						subText={cell.romaji}
+						progress={0}
 						onclick={() => {}}
 					/>
 				{:else}

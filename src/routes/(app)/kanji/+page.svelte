@@ -4,19 +4,18 @@
 	import type { PageData } from "./$types";
 	import { onMount } from "svelte";
 
+	type Selected = { level: string; item: (typeof data.groups)[number]["items"][number] } | null;
+
 	const { data }: { data: PageData } = $props<{ data: PageData }>();
 
 	const totalKanji = $derived(data.groups.reduce((sum, group) => sum + group.items.length, 0));
 
+	let selected: Selected = $state(null);
+	const isOpen = $derived(!!selected);
+
 	function label(level: string) {
 		return level === "other" ? "OTHER" : level.toUpperCase(); // n3 -> N3
 	}
-
-	// ---- selection + sidebar state ----
-	type Selected = { level: string; item: (typeof data.groups)[number]["items"][number] } | null;
-	let selected: Selected = $state(null);
-
-	const isOpen = $derived(!!selected);
 
 	function selectKanji(level: string, item: (typeof data.groups)[number]["items"][number]) {
 		selected = { level, item };
@@ -69,6 +68,7 @@
 								selected={selected?.item.kanji === item.kanji}
 								symbol={item.kanji}
 								subText={null}
+								progress={0}
 								onclick={() => toggleSelect(group.level, item)}
 							/>
 						{/each}

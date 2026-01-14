@@ -3,23 +3,26 @@
 		selected,
 		symbol,
 		subText,
-		progress = 0,
+		progress,
 		onclick
 	}: {
 		selected: boolean;
 		symbol: string;
 		subText: string | null;
-		progress?: 0 | 1 | 2 | 3 | 4 | 5;
+		progress: number;
 		onclick: () => void;
 	} = $props();
 
 	function calcWidthFromProgress(progress: number) {
-		return `${progress * 20}%`;
+		if (progress < 0 || progress > 1)
+			throw new Error(`Progress value for ${symbol} is invalid.`);
+
+		return `${progress * 100}%`;
 	}
 </script>
 
 <button
-	class="symbol-card"
+	class="symbolCard"
 	class:selected
 	type="button"
 	aria-label={`Symbol ${symbol}`}
@@ -28,15 +31,15 @@
 >
 	<div class="symbol">{symbol}</div>
 	{#if subText}
-		<div class="sub-text">{subText}</div>
+		<div class="subText">{subText}</div>
 	{/if}
-	<div class="symbol-progress">
-		<div class="progress-indecator" style:width={calcWidthFromProgress(progress)}></div>
+	<div class="symbolProgress">
+		<div class="progressIndicator" style:width={calcWidthFromProgress(progress)}></div>
 	</div>
 </button>
 
 <style>
-	.symbol-card {
+	.symbolCard {
 		display: grid;
 		gap: 0.2rem;
 		place-items: center;
@@ -46,7 +49,6 @@
 		border-radius: var(--radius-sm);
 		border: 2px solid var(--stroke);
 		background: var(--paper);
-		box-shadow: var(--shadow-soft);
 		cursor: pointer;
 		transition:
 			transform 140ms ease,
@@ -55,23 +57,23 @@
 			background 140ms ease;
 	}
 
-	.symbol-card:hover {
+	.symbolCard:hover {
 		transform: translateY(-3px);
 		border-color: var(--stroke-accent);
 		box-shadow: var(--shadow);
 	}
 
-	.symbol-card:active {
+	.symbolCard:active {
 		transform: translateY(-1px);
 		box-shadow: var(--shadow-soft);
 	}
 
-	.symbol-card:focus-visible {
+	.symbolCard:focus-visible {
 		outline: 3px solid var(--stroke-accent);
 		outline-offset: 3px;
 	}
 
-	.symbol-card.selected {
+	.symbolCard.selected {
 		border-color: var(--stroke-accent);
 		box-shadow: var(--shadow);
 		background: rgba(255, 255, 255, 0.92);
@@ -84,14 +86,14 @@
 		color: var(--ink);
 	}
 
-	.sub-text {
+	.subText {
 		font-size: 0.9rem;
 		line-height: 1;
 		margin: 0.25rem 0rem;
 		color: var(--muted);
 	}
 
-	.symbol-progress {
+	.symbolProgress {
 		display: flex;
 		flex-direction: row;
 		align-items: flex-start;
@@ -102,7 +104,7 @@
 		background-color: lightgray;
 	}
 
-	.progress-indecator {
+	.progressIndicator {
 		background-color: var(--orange);
 		height: 100%;
 		width: 40%;
