@@ -4,35 +4,66 @@
 	import type { PageData } from "./$types";
 	import { onMount } from "svelte";
 
-	type Selected = { level: string; item: (typeof data.groups)[number]["items"][number] } | null;
+	const { data }: { data: PageData } = $props();
 
-	const { data }: { data: PageData } = $props<{ data: PageData }>();
+	// server now returns: { pageItems: PageItem[] }
+	const totalKanji = $derived(data.items.length);
 
-	const totalKanji = $derived(data.groups.reduce((sum, group) => sum + group.items.length, 0));
+	type Item = (typeof data.items)[number];
+	type GroupLevel = 1 | 2 | 3 | 4 | 5 | "other";
+
+	type Selected = { item: Item } | null;
 
 	let selected: Selected = $state(null);
 	const isOpen = $derived(!!selected);
 
-	function label(level: string) {
-		return level === "other" ? "OTHER" : level.toUpperCase(); // n3 -> N3
+	function label(level: GroupLevel) {
+		return level === "other" ? "other" : `N${level}`;
 	}
 
-	function selectKanji(level: string, item: (typeof data.groups)[number]["items"][number]) {
-		selected = { level, item };
+	// Build groups on the client (since server returns a flat list)
+	const groups = $derived.by(() => {
+		const buckets = new Map<GroupLevel, Item[]>([
+			[5, []],
+			[4, []],
+			[3, []],
+			[2, []],
+			[1, []],
+			["other", []]
+		]);
+
+		for (const item of data.items) {
+			const level: GroupLevel = item.jlpt ?? "other";
+			buckets.get(level)!.push(item);
+		}
+
+		// Optional: stable-ish sorting within a group
+		for (const arr of buckets.values()) {
+			arr.sort((a, b) => a.symbol.localeCompare(b.symbol));
+		}
+
+		const ordered: GroupLevel[] = [5, 4, 3, 2, 1, "other"];
+		return ordered
+			.map((level) => ({ level, items: buckets.get(level)! }))
+			.filter((g) => g.items.length > 0);
+	});
+
+	function selectKanji(item: Item) {
+		selected = { item };
 	}
 
-	function closeSidebar() {
+	function closeModal() {
 		selected = null;
 	}
 
-	function toggleSelect(level: string, item: (typeof data.groups)[number]["items"][number]) {
-		if (selected?.item.kanji === item.kanji) closeSidebar();
-		else selectKanji(level, item);
+	function toggleSelect(item: Item) {
+		if (selected?.item.kvgId === item.kvgId) closeModal();
+		else selectKanji(item);
 	}
 
 	onMount(() => {
 		const onKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape" && isOpen) closeSidebar();
+			if (e.key === "Escape" && isOpen) closeModal();
 		};
 		window.addEventListener("keydown", onKeyDown);
 		return () => window.removeEventListener("keydown", onKeyDown);
@@ -47,8 +78,8 @@
 		</header>
 
 		<div class="stack" aria-label="Kanji groups">
-			{#each data.groups as group (group.level)}
-				<section class="group" id={group.level}>
+			{#each groups as group (group.level)}
+				<section class="group" id={label(group.level)}>
 					<header class="groupHeader">
 						<div class="groupTitle">
 							<h2>
@@ -63,13 +94,13 @@
 					</header>
 
 					<div class="grid" aria-label={`${label(group.level)} kanji`}>
-						{#each group.items as item (item.kanji)}
+						{#each group.items as item (item.kvgId)}
 							<SymbolCard
-								selected={selected?.item.kanji === item.kanji}
-								symbol={item.kanji}
+								selected={selected?.item.kvgId === item.kvgId}
+								symbol={item.symbol}
 								subText={null}
 								progress={0}
-								onclick={() => toggleSelect(group.level, item)}
+								onclick={() => toggleSelect(item)}
 							/>
 						{/each}
 					</div>
@@ -78,21 +109,25 @@
 		</div>
 	</section>
 
+	<!--
+		Your new PageItem only contains { kvgId, symbol, jlpt }.
+		So we pass minimal info here.
+		If KanjiInfoModal fetches details internally by `kanji`, you're good.
+	-->
 	<KanjiInfoModal
 		open={!!selected}
-		kanji={selected?.item.kanji ?? ""}
-		jlptLevel={selected?.level ?? "other"}
+		kanji={selected?.item.symbol ?? ""}
+		jlptLevel={selected?.item.jlpt ?? null}
 		info={{
-			meanings: selected?.item.info.meanings ?? [],
-			readings_on: selected?.item.info.readings_on ?? [],
-			readings_kun: selected?.item.info.readings_kun ?? [],
-			strokes: selected?.item.info.strokes ?? null
+			meanings: [],
+			readings_on: [],
+			readings_kun: [],
+			strokes: null
 		}}
-		onClose={() => (selected = null)}
+		onClose={closeModal}
 		onPractice={(kanji: string) => {
-			selected = null; // close modal
+			closeModal();
 			console.log(kanji);
-			// route to practice
 			// goto(`/practice/${kanji}`);
 		}}
 	/>
@@ -115,7 +150,6 @@
 		width: min(1100px, 100%);
 	}
 
-	/* Top header matches your existing look */
 	.topbar {
 		max-width: var(--card-width, 900px);
 		margin: 0 auto 1.25rem;
@@ -195,7 +229,6 @@
 		gap: 0.75rem;
 	}
 
-	/* Mobile: turn into a bottom sheet */
 	@media (max-width: 640px) {
 		.page {
 			padding: 1rem;

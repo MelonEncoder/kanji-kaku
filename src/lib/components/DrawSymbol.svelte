@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount, tick } from "svelte";
 	import getPathEndpoints from "$lib/svg/getPathEndpoints";
-	import pointsToSmoothSVGPath from "$lib/svg/pointsToSmoothSVGPath";
+	import pointsToPath from "$lib/svg/pointsToPath";
 	import shakeElement from "$lib/effects/shakeElement";
-	import { loadKanjiVgSvg, symbolToKanjiVgCode } from "$lib/svg/loadKanjiVgSvg";
+	import { loadRawKvg } from "$lib/kvg/loadRawKvg";
+	import { symbolToKvgId } from "$lib/kvg/symbolToKvgId";
 
 	interface ViewBox {
 		x: number;
@@ -187,7 +188,7 @@
 
 		if (currentStroke) {
 			if (isValidStroke()) {
-				currentStroke.d = pointsToSmoothSVGPath(currentStroke.points);
+				currentStroke.d = pointsToPath(currentStroke.points, "quadratic");
 				currentStroke.completed = true;
 				currentStroke.valid = true;
 				failedCurrentStroke = false;
@@ -212,7 +213,7 @@
 	}
 
 	onMount(async () => {
-		rawSymbolSvg = await loadKanjiVgSvg(symbolToKanjiVgCode(symbol));
+		rawSymbolSvg = await loadRawKvg(symbolToKvgId(symbol));
 
 		const svgDoc = new DOMParser().parseFromString(rawSymbolSvg, "image/svg+xml");
 

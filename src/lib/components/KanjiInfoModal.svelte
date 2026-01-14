@@ -12,7 +12,7 @@
 	}: {
 		open: boolean;
 		kanji: string;
-		jlptLevel: string;
+		jlptLevel: 1 | 2 | 3 | 4 | 5 | null;
 		info: {
 			meanings: string[];
 			readings_on: string[];
@@ -27,8 +27,8 @@
 		onPractice?.(kanji);
 	}
 
-	const label = (level: string) =>
-		level === "other" ? "Not in JLPT" : `JLPT ${level.toUpperCase()}`;
+	const label = (level: 1 | 2 | 3 | 4 | 5 | null) =>
+		level === null ? "Not in JLPT" : `JLPT N${level}`;
 	const fmt = (xs: string[]) => xs.join(" • ");
 
 	const meanings = $derived(info?.meanings ?? []);

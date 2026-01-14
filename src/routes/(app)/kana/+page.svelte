@@ -1,14 +1,11 @@
 <script lang="ts">
+	import type { PageData } from "./$types";
 	import SymbolCard from "$lib/components/SymbolCard.svelte";
-	import {
-		KANA,
-		type KanaCell,
-		type KanaKind,
-		type KanaRow,
-		type KanaScript
-	} from "$lib/data/kana";
+	import type { KanaEntry, KanaKind, KanaRow, KanaScript } from "$lib/types/kana";
 
-	let currentScript: KanaScript = "hiragana";
+	const { data }: { data: PageData } = $props<{ data: PageData }>();
+
+	let currentScript: KanaScript = $state("hiragana");
 
 	function setScript(script: KanaScript) {
 		currentScript = script;
@@ -24,23 +21,19 @@
 	// 	goto(resolve(`/practice/kana?script=${currentScript}`));
 	// }
 
-	function charOf(c: KanaCell, script: KanaScript) {
-		return script === "hiragana" ? c.hiragana.symbol : c.katakana.symbol;
-	}
-
-	function buildGojuonGrid(kind: KanaKind, rows: KanaRow[]) {
-		const items = KANA.filter((c) => c.kind === kind);
-		const grid: (KanaCell | null)[] = [];
-
+	function buildGojuonGrid(kind: KanaKind, rows: KanaRow[], script: KanaScript) {
+		const items = (Object.values(data.kana[script]) as KanaEntry[]).filter(
+			(c) => c.kind === kind
+		);
+		const grid: (KanaEntry | null)[] = [];
 		for (const row of rows) {
 			if (kind === "yoon") {
-				for (const col of ["a", "u", "o"]) {
+				for (const col of ["a", "u", "o"] as const) {
 					grid.push(items.find((c) => c.row === row && c.col === col) ?? null);
 				}
 				continue;
 			}
-
-			for (const col of ["a", "i", "u", "e", "o"]) {
+			for (const col of ["a", "i", "u", "e", "o"] as const) {
 				grid.push(items.find((c) => c.row === row && c.col === col) ?? null);
 			}
 		}
@@ -53,10 +46,10 @@
 	const handakutenRows: KanaRow[] = ["h"];
 	const yoonRows: KanaRow[] = ["k", "g", "s", "z", "t", "n", "h", "b", "p", "m", "r"];
 
-	const baseGrid = buildGojuonGrid("base", baseRows);
-	const dakutenGrid = buildGojuonGrid("dakuten", dakutenRows);
-	const handakutenGrid = buildGojuonGrid("handakuten", handakutenRows);
-	const yoonGrid = buildGojuonGrid("yoon", yoonRows);
+	const baseGrid = $derived(buildGojuonGrid("base", baseRows, currentScript));
+	const dakutenGrid = $derived(buildGojuonGrid("dakuten", dakutenRows, currentScript));
+	const handakutenGrid = $derived(buildGojuonGrid("handakuten", handakutenRows, currentScript));
+	const yoonGrid = $derived(buildGojuonGrid("yoon", yoonRows, currentScript));
 </script>
 
 <main class="page">
@@ -120,7 +113,7 @@
 	script
 }: {
 	title: string;
-	cells: (KanaCell | null)[];
+	cells: (KanaEntry | null)[];
 	script: KanaScript;
 })}
 	<section class="card" id={title.toLowerCase()}>
@@ -135,7 +128,7 @@
 				{#if cell && script}
 					<SymbolCard
 						selected={false}
-						symbol={charOf(cell, script)}
+						symbol={cell.symbol}
 						subText={cell.romaji}
 						progress={0}
 						onclick={() => {}}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, tick } from "svelte";
-	import { loadKanjiVgSvg, symbolToKanjiVgCode } from "$lib/svg/loadKanjiVgSvg";
+	import { loadRawKvg } from "$lib/kvg/loadRawKvg";
+	import { symbolToKvgId } from "$lib/kvg/symbolToKvgId";
 
 	interface symbolStroke {
 		id: string;
@@ -26,7 +27,7 @@
 		showControls?: boolean;
 	} = $props();
 
-	let rawsymbolSvg = "";
+	let rawSymbolSvg = "";
 	let viewBox: ViewBox = $state({ x: 0, y: 0, w: 109, h: 109 });
 	let symbolStrokes: symbolStroke[] = $state([]);
 
@@ -76,8 +77,8 @@
 	}
 
 	onMount(async () => {
-		rawsymbolSvg = await loadKanjiVgSvg(symbolToKanjiVgCode(symbol));
-		const svgDoc = new DOMParser().parseFromString(rawsymbolSvg, "image/svg+xml");
+		rawSymbolSvg = await loadRawKvg(symbolToKvgId(symbol));
+		const svgDoc = new DOMParser().parseFromString(rawSymbolSvg, "image/svg+xml");
 		viewBox = parseViewBox(svgDoc);
 
 		const paths = [...svgDoc.querySelectorAll("path")]

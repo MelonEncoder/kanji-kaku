@@ -1,0 +1,1814 @@
+{
+	"hiragana": {
+		"03042": {
+			"symbol": "あ",
+			"unicode": "U+3042",
+			"romaji": "a",
+			"kind": "base",
+			"row": "v",
+			"col": "a"
+		},
+		"03044": {
+			"symbol": "い",
+			"unicode": "U+3044",
+			"romaji": "i",
+			"kind": "base",
+			"row": "v",
+			"col": "i"
+		},
+		"03046": {
+			"symbol": "う",
+			"unicode": "U+3046",
+			"romaji": "u",
+			"kind": "base",
+			"row": "v",
+			"col": "u"
+		},
+		"03048": {
+			"symbol": "え",
+			"unicode": "U+3048",
+			"romaji": "e",
+			"kind": "base",
+			"row": "v",
+			"col": "e"
+		},
+		"0304a": {
+			"symbol": "お",
+			"unicode": "U+304A",
+			"romaji": "o",
+			"kind": "base",
+			"row": "v",
+			"col": "o"
+		},
+		"0304b": {
+			"symbol": "か",
+			"unicode": "U+304B",
+			"romaji": "ka",
+			"kind": "base",
+			"row": "k",
+			"col": "a"
+		},
+		"0304d": {
+			"symbol": "き",
+			"unicode": "U+304D",
+			"romaji": "ki",
+			"kind": "base",
+			"row": "k",
+			"col": "i"
+		},
+		"0304f": {
+			"symbol": "く",
+			"unicode": "U+304F",
+			"romaji": "ku",
+			"kind": "base",
+			"row": "k",
+			"col": "u"
+		},
+		"03051": {
+			"symbol": "け",
+			"unicode": "U+3051",
+			"romaji": "ke",
+			"kind": "base",
+			"row": "k",
+			"col": "e"
+		},
+		"03053": {
+			"symbol": "こ",
+			"unicode": "U+3053",
+			"romaji": "ko",
+			"kind": "base",
+			"row": "k",
+			"col": "o"
+		},
+		"03055": {
+			"symbol": "さ",
+			"unicode": "U+3055",
+			"romaji": "sa",
+			"kind": "base",
+			"row": "s",
+			"col": "a"
+		},
+		"03057": {
+			"symbol": "し",
+			"unicode": "U+3057",
+			"romaji": "shi",
+			"kind": "base",
+			"row": "s",
+			"col": "i"
+		},
+		"03059": {
+			"symbol": "す",
+			"unicode": "U+3059",
+			"romaji": "su",
+			"kind": "base",
+			"row": "s",
+			"col": "u"
+		},
+		"0305b": {
+			"symbol": "せ",
+			"unicode": "U+305B",
+			"romaji": "se",
+			"kind": "base",
+			"row": "s",
+			"col": "e"
+		},
+		"0305d": {
+			"symbol": "そ",
+			"unicode": "U+305D",
+			"romaji": "so",
+			"kind": "base",
+			"row": "s",
+			"col": "o"
+		},
+		"0305f": {
+			"symbol": "た",
+			"unicode": "U+305F",
+			"romaji": "ta",
+			"kind": "base",
+			"row": "t",
+			"col": "a"
+		},
+		"03061": {
+			"symbol": "ち",
+			"unicode": "U+3061",
+			"romaji": "chi",
+			"kind": "base",
+			"row": "t",
+			"col": "i"
+		},
+		"03064": {
+			"symbol": "つ",
+			"unicode": "U+3064",
+			"romaji": "tsu",
+			"kind": "base",
+			"row": "t",
+			"col": "u"
+		},
+		"03066": {
+			"symbol": "て",
+			"unicode": "U+3066",
+			"romaji": "te",
+			"kind": "base",
+			"row": "t",
+			"col": "e"
+		},
+		"03068": {
+			"symbol": "と",
+			"unicode": "U+3068",
+			"romaji": "to",
+			"kind": "base",
+			"row": "t",
+			"col": "o"
+		},
+		"0306a": {
+			"symbol": "な",
+			"unicode": "U+306A",
+			"romaji": "na",
+			"kind": "base",
+			"row": "n",
+			"col": "a"
+		},
+		"0306b": {
+			"symbol": "に",
+			"unicode": "U+306B",
+			"romaji": "ni",
+			"kind": "base",
+			"row": "n",
+			"col": "i"
+		},
+		"0306c": {
+			"symbol": "ぬ",
+			"unicode": "U+306C",
+			"romaji": "nu",
+			"kind": "base",
+			"row": "n",
+			"col": "u"
+		},
+		"0306d": {
+			"symbol": "ね",
+			"unicode": "U+306D",
+			"romaji": "ne",
+			"kind": "base",
+			"row": "n",
+			"col": "e"
+		},
+		"0306e": {
+			"symbol": "の",
+			"unicode": "U+306E",
+			"romaji": "no",
+			"kind": "base",
+			"row": "n",
+			"col": "o"
+		},
+		"0306f": {
+			"symbol": "は",
+			"unicode": "U+306F",
+			"romaji": "ha",
+			"kind": "base",
+			"row": "h",
+			"col": "a"
+		},
+		"03072": {
+			"symbol": "ひ",
+			"unicode": "U+3072",
+			"romaji": "hi",
+			"kind": "base",
+			"row": "h",
+			"col": "i"
+		},
+		"03075": {
+			"symbol": "ふ",
+			"unicode": "U+3075",
+			"romaji": "fu",
+			"kind": "base",
+			"row": "h",
+			"col": "u"
+		},
+		"03078": {
+			"symbol": "へ",
+			"unicode": "U+3078",
+			"romaji": "he",
+			"kind": "base",
+			"row": "h",
+			"col": "e"
+		},
+		"0307b": {
+			"symbol": "ほ",
+			"unicode": "U+307B",
+			"romaji": "ho",
+			"kind": "base",
+			"row": "h",
+			"col": "o"
+		},
+		"0307e": {
+			"symbol": "ま",
+			"unicode": "U+307E",
+			"romaji": "ma",
+			"kind": "base",
+			"row": "m",
+			"col": "a"
+		},
+		"0307f": {
+			"symbol": "み",
+			"unicode": "U+307F",
+			"romaji": "mi",
+			"kind": "base",
+			"row": "m",
+			"col": "i"
+		},
+		"03080": {
+			"symbol": "む",
+			"unicode": "U+3080",
+			"romaji": "mu",
+			"kind": "base",
+			"row": "m",
+			"col": "u"
+		},
+		"03081": {
+			"symbol": "め",
+			"unicode": "U+3081",
+			"romaji": "me",
+			"kind": "base",
+			"row": "m",
+			"col": "e"
+		},
+		"03082": {
+			"symbol": "も",
+			"unicode": "U+3082",
+			"romaji": "mo",
+			"kind": "base",
+			"row": "m",
+			"col": "o"
+		},
+		"03084": {
+			"symbol": "や",
+			"unicode": "U+3084",
+			"romaji": "ya",
+			"kind": "base",
+			"row": "y",
+			"col": "a"
+		},
+		"03086": {
+			"symbol": "ゆ",
+			"unicode": "U+3086",
+			"romaji": "yu",
+			"kind": "base",
+			"row": "y",
+			"col": "u"
+		},
+		"03088": {
+			"symbol": "よ",
+			"unicode": "U+3088",
+			"romaji": "yo",
+			"kind": "base",
+			"row": "y",
+			"col": "o"
+		},
+		"03089": {
+			"symbol": "ら",
+			"unicode": "U+3089",
+			"romaji": "ra",
+			"kind": "base",
+			"row": "r",
+			"col": "a"
+		},
+		"0308a": {
+			"symbol": "り",
+			"unicode": "U+308A",
+			"romaji": "ri",
+			"kind": "base",
+			"row": "r",
+			"col": "i"
+		},
+		"0308b": {
+			"symbol": "る",
+			"unicode": "U+308B",
+			"romaji": "ru",
+			"kind": "base",
+			"row": "r",
+			"col": "u"
+		},
+		"0308c": {
+			"symbol": "れ",
+			"unicode": "U+308C",
+			"romaji": "re",
+			"kind": "base",
+			"row": "r",
+			"col": "e"
+		},
+		"0308d": {
+			"symbol": "ろ",
+			"unicode": "U+308D",
+			"romaji": "ro",
+			"kind": "base",
+			"row": "r",
+			"col": "o"
+		},
+		"0308f": {
+			"symbol": "わ",
+			"unicode": "U+308F",
+			"romaji": "wa",
+			"kind": "base",
+			"row": "w",
+			"col": "a"
+		},
+		"03092": {
+			"symbol": "を",
+			"unicode": "U+3092",
+			"romaji": "wo",
+			"kind": "base",
+			"row": "w",
+			"col": "o"
+		},
+		"03093": {
+			"symbol": "ん",
+			"unicode": "U+3093",
+			"romaji": "n",
+			"kind": "base",
+			"row": "other",
+			"col": "a"
+		},
+		"0304c": {
+			"symbol": "が",
+			"unicode": "U+304C",
+			"romaji": "ga",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "a"
+		},
+		"0304e": {
+			"symbol": "ぎ",
+			"unicode": "U+304E",
+			"romaji": "gi",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "i"
+		},
+		"03050": {
+			"symbol": "ぐ",
+			"unicode": "U+3050",
+			"romaji": "gu",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "u"
+		},
+		"03052": {
+			"symbol": "げ",
+			"unicode": "U+3052",
+			"romaji": "ge",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "e"
+		},
+		"03054": {
+			"symbol": "ご",
+			"unicode": "U+3054",
+			"romaji": "go",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "o"
+		},
+		"03056": {
+			"symbol": "ざ",
+			"unicode": "U+3056",
+			"romaji": "za",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "a"
+		},
+		"03058": {
+			"symbol": "じ",
+			"unicode": "U+3058",
+			"romaji": "ji",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "i"
+		},
+		"0305a": {
+			"symbol": "ず",
+			"unicode": "U+305A",
+			"romaji": "zu",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "u"
+		},
+		"0305c": {
+			"symbol": "ぜ",
+			"unicode": "U+305C",
+			"romaji": "ze",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "e"
+		},
+		"0305e": {
+			"symbol": "ぞ",
+			"unicode": "U+305E",
+			"romaji": "zo",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "o"
+		},
+		"03060": {
+			"symbol": "だ",
+			"unicode": "U+3060",
+			"romaji": "da",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "a"
+		},
+		"03062": {
+			"symbol": "ぢ",
+			"unicode": "U+3062",
+			"romaji": "ji",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "i"
+		},
+		"03065": {
+			"symbol": "づ",
+			"unicode": "U+3065",
+			"romaji": "zu",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "u"
+		},
+		"03067": {
+			"symbol": "で",
+			"unicode": "U+3067",
+			"romaji": "de",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "e"
+		},
+		"03069": {
+			"symbol": "ど",
+			"unicode": "U+3069",
+			"romaji": "do",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "o"
+		},
+		"03070": {
+			"symbol": "ば",
+			"unicode": "U+3070",
+			"romaji": "ba",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "a"
+		},
+		"03073": {
+			"symbol": "び",
+			"unicode": "U+3073",
+			"romaji": "bi",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "i"
+		},
+		"03076": {
+			"symbol": "ぶ",
+			"unicode": "U+3076",
+			"romaji": "bu",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "u"
+		},
+		"03079": {
+			"symbol": "べ",
+			"unicode": "U+3079",
+			"romaji": "be",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "e"
+		},
+		"0307c": {
+			"symbol": "ぼ",
+			"unicode": "U+307C",
+			"romaji": "bo",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "o"
+		},
+		"03071": {
+			"symbol": "ぱ",
+			"unicode": "U+3071",
+			"romaji": "pa",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "a"
+		},
+		"03074": {
+			"symbol": "ぴ",
+			"unicode": "U+3074",
+			"romaji": "pi",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "i"
+		},
+		"03077": {
+			"symbol": "ぷ",
+			"unicode": "U+3077",
+			"romaji": "pu",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "u"
+		},
+		"0307a": {
+			"symbol": "ぺ",
+			"unicode": "U+307A",
+			"romaji": "pe",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "e"
+		},
+		"0307d": {
+			"symbol": "ぽ",
+			"unicode": "U+307D",
+			"romaji": "po",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "o"
+		},
+		"0304d-03083": {
+			"symbol": "きゃ",
+			"unicode": "U+304D-U+3083",
+			"romaji": "kya",
+			"kind": "yoon",
+			"row": "k",
+			"col": "a"
+		},
+		"0304d-03085": {
+			"symbol": "きゅ",
+			"unicode": "U+304D-U+3085",
+			"romaji": "kyu",
+			"kind": "yoon",
+			"row": "k",
+			"col": "u"
+		},
+		"0304d-03087": {
+			"symbol": "きょ",
+			"unicode": "U+304D-U+3087",
+			"romaji": "kyo",
+			"kind": "yoon",
+			"row": "k",
+			"col": "o"
+		},
+		"03057-03083": {
+			"symbol": "しゃ",
+			"unicode": "U+3057-U+3083",
+			"romaji": "sha",
+			"kind": "yoon",
+			"row": "s",
+			"col": "a"
+		},
+		"03057-03085": {
+			"symbol": "しゅ",
+			"unicode": "U+3057-U+3085",
+			"romaji": "shu",
+			"kind": "yoon",
+			"row": "s",
+			"col": "u"
+		},
+		"03057-03087": {
+			"symbol": "しょ",
+			"unicode": "U+3057-U+3087",
+			"romaji": "sho",
+			"kind": "yoon",
+			"row": "s",
+			"col": "o"
+		},
+		"03061-03083": {
+			"symbol": "ちゃ",
+			"unicode": "U+3061-U+3083",
+			"romaji": "cha",
+			"kind": "yoon",
+			"row": "t",
+			"col": "a"
+		},
+		"03061-03085": {
+			"symbol": "ちゅ",
+			"unicode": "U+3061-U+3085",
+			"romaji": "chu",
+			"kind": "yoon",
+			"row": "t",
+			"col": "u"
+		},
+		"03061-03087": {
+			"symbol": "ちょ",
+			"unicode": "U+3061-U+3087",
+			"romaji": "cho",
+			"kind": "yoon",
+			"row": "t",
+			"col": "o"
+		},
+		"0306b-03083": {
+			"symbol": "にゃ",
+			"unicode": "U+306B-U+3083",
+			"romaji": "nya",
+			"kind": "yoon",
+			"row": "n",
+			"col": "a"
+		},
+		"0306b-03085": {
+			"symbol": "にゅ",
+			"unicode": "U+306B-U+3085",
+			"romaji": "nyu",
+			"kind": "yoon",
+			"row": "n",
+			"col": "u"
+		},
+		"0306b-03087": {
+			"symbol": "にょ",
+			"unicode": "U+306B-U+3087",
+			"romaji": "nyo",
+			"kind": "yoon",
+			"row": "n",
+			"col": "o"
+		},
+		"03072-03083": {
+			"symbol": "ひゃ",
+			"unicode": "U+3072-U+3083",
+			"romaji": "hya",
+			"kind": "yoon",
+			"row": "h",
+			"col": "a"
+		},
+		"03072-03085": {
+			"symbol": "ひゅ",
+			"unicode": "U+3072-U+3085",
+			"romaji": "hyu",
+			"kind": "yoon",
+			"row": "h",
+			"col": "u"
+		},
+		"03072-03087": {
+			"symbol": "ひょ",
+			"unicode": "U+3072-U+3087",
+			"romaji": "hyo",
+			"kind": "yoon",
+			"row": "h",
+			"col": "o"
+		},
+		"0307f-03083": {
+			"symbol": "みゃ",
+			"unicode": "U+307F-U+3083",
+			"romaji": "mya",
+			"kind": "yoon",
+			"row": "m",
+			"col": "a"
+		},
+		"0307f-03085": {
+			"symbol": "みゅ",
+			"unicode": "U+307F-U+3085",
+			"romaji": "myu",
+			"kind": "yoon",
+			"row": "m",
+			"col": "u"
+		},
+		"0307f-03087": {
+			"symbol": "みょ",
+			"unicode": "U+307F-U+3087",
+			"romaji": "myo",
+			"kind": "yoon",
+			"row": "m",
+			"col": "o"
+		},
+		"0308a-03083": {
+			"symbol": "りゃ",
+			"unicode": "U+308A-U+3083",
+			"romaji": "rya",
+			"kind": "yoon",
+			"row": "r",
+			"col": "a"
+		},
+		"0308a-03085": {
+			"symbol": "りゅ",
+			"unicode": "U+308A-U+3085",
+			"romaji": "ryu",
+			"kind": "yoon",
+			"row": "r",
+			"col": "u"
+		},
+		"0308a-03087": {
+			"symbol": "りょ",
+			"unicode": "U+308A-U+3087",
+			"romaji": "ryo",
+			"kind": "yoon",
+			"row": "r",
+			"col": "o"
+		},
+		"0304e-03083": {
+			"symbol": "ぎゃ",
+			"unicode": "U+304E-U+3083",
+			"romaji": "gya",
+			"kind": "yoon",
+			"row": "g",
+			"col": "a"
+		},
+		"0304e-03085": {
+			"symbol": "ぎゅ",
+			"unicode": "U+304E-U+3085",
+			"romaji": "gyu",
+			"kind": "yoon",
+			"row": "g",
+			"col": "u"
+		},
+		"0304e-03087": {
+			"symbol": "ぎょ",
+			"unicode": "U+304E-U+3087",
+			"romaji": "gyo",
+			"kind": "yoon",
+			"row": "g",
+			"col": "o"
+		},
+		"03058-03083": {
+			"symbol": "じゃ",
+			"unicode": "U+3058-U+3083",
+			"romaji": "ja",
+			"kind": "yoon",
+			"row": "z",
+			"col": "a"
+		},
+		"03058-03085": {
+			"symbol": "じゅ",
+			"unicode": "U+3058-U+3085",
+			"romaji": "ju",
+			"kind": "yoon",
+			"row": "z",
+			"col": "u"
+		},
+		"03058-03087": {
+			"symbol": "じょ",
+			"unicode": "U+3058-U+3087",
+			"romaji": "jo",
+			"kind": "yoon",
+			"row": "z",
+			"col": "o"
+		},
+		"03073-03083": {
+			"symbol": "びゃ",
+			"unicode": "U+3073-U+3083",
+			"romaji": "bya",
+			"kind": "yoon",
+			"row": "b",
+			"col": "a"
+		},
+		"03073-03085": {
+			"symbol": "びゅ",
+			"unicode": "U+3073-U+3085",
+			"romaji": "byu",
+			"kind": "yoon",
+			"row": "b",
+			"col": "u"
+		},
+		"03073-03087": {
+			"symbol": "びょ",
+			"unicode": "U+3073-U+3087",
+			"romaji": "byo",
+			"kind": "yoon",
+			"row": "b",
+			"col": "o"
+		},
+		"03074-03083": {
+			"symbol": "ぴゃ",
+			"unicode": "U+3074-U+3083",
+			"romaji": "pya",
+			"kind": "yoon",
+			"row": "p",
+			"col": "a"
+		},
+		"03074-03085": {
+			"symbol": "ぴゅ",
+			"unicode": "U+3074-U+3085",
+			"romaji": "pyu",
+			"kind": "yoon",
+			"row": "p",
+			"col": "u"
+		},
+		"03074-03087": {
+			"symbol": "ぴょ",
+			"unicode": "U+3074-U+3087",
+			"romaji": "pyo",
+			"kind": "yoon",
+			"row": "p",
+			"col": "o"
+		},
+		"03041": {
+			"symbol": "ぁ",
+			"unicode": "U+3041",
+			"romaji": "a",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03043": {
+			"symbol": "ぃ",
+			"unicode": "U+3043",
+			"romaji": "i",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03045": {
+			"symbol": "ぅ",
+			"unicode": "U+3045",
+			"romaji": "u",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03047": {
+			"symbol": "ぇ",
+			"unicode": "U+3047",
+			"romaji": "e",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03049": {
+			"symbol": "ぉ",
+			"unicode": "U+3049",
+			"romaji": "o",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03083": {
+			"symbol": "ゃ",
+			"unicode": "U+3083",
+			"romaji": "ya",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03085": {
+			"symbol": "ゅ",
+			"unicode": "U+3085",
+			"romaji": "yu",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03087": {
+			"symbol": "ょ",
+			"unicode": "U+3087",
+			"romaji": "yo",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"03063": {
+			"symbol": "っ",
+			"unicode": "U+3063",
+			"romaji": "tsu",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		}
+	},
+	"katakana": {
+		"030a2": {
+			"symbol": "ア",
+			"unicode": "U+30A2",
+			"romaji": "a",
+			"kind": "base",
+			"row": "v",
+			"col": "a"
+		},
+		"030a4": {
+			"symbol": "イ",
+			"unicode": "U+30A4",
+			"romaji": "i",
+			"kind": "base",
+			"row": "v",
+			"col": "i"
+		},
+		"030a6": {
+			"symbol": "ウ",
+			"unicode": "U+30A6",
+			"romaji": "u",
+			"kind": "base",
+			"row": "v",
+			"col": "u"
+		},
+		"030a8": {
+			"symbol": "エ",
+			"unicode": "U+30A8",
+			"romaji": "e",
+			"kind": "base",
+			"row": "v",
+			"col": "e"
+		},
+		"030aa": {
+			"symbol": "オ",
+			"unicode": "U+30AA",
+			"romaji": "o",
+			"kind": "base",
+			"row": "v",
+			"col": "o"
+		},
+		"030ab": {
+			"symbol": "カ",
+			"unicode": "U+30AB",
+			"romaji": "ka",
+			"kind": "base",
+			"row": "k",
+			"col": "a"
+		},
+		"030ad": {
+			"symbol": "キ",
+			"unicode": "U+30AD",
+			"romaji": "ki",
+			"kind": "base",
+			"row": "k",
+			"col": "i"
+		},
+		"030af": {
+			"symbol": "ク",
+			"unicode": "U+30AF",
+			"romaji": "ku",
+			"kind": "base",
+			"row": "k",
+			"col": "u"
+		},
+		"030b1": {
+			"symbol": "ケ",
+			"unicode": "U+30B1",
+			"romaji": "ke",
+			"kind": "base",
+			"row": "k",
+			"col": "e"
+		},
+		"030b3": {
+			"symbol": "コ",
+			"unicode": "U+30B3",
+			"romaji": "ko",
+			"kind": "base",
+			"row": "k",
+			"col": "o"
+		},
+		"030b5": {
+			"symbol": "サ",
+			"unicode": "U+30B5",
+			"romaji": "sa",
+			"kind": "base",
+			"row": "s",
+			"col": "a"
+		},
+		"030b7": {
+			"symbol": "シ",
+			"unicode": "U+30B7",
+			"romaji": "shi",
+			"kind": "base",
+			"row": "s",
+			"col": "i"
+		},
+		"030b9": {
+			"symbol": "ス",
+			"unicode": "U+30B9",
+			"romaji": "su",
+			"kind": "base",
+			"row": "s",
+			"col": "u"
+		},
+		"030bb": {
+			"symbol": "セ",
+			"unicode": "U+30BB",
+			"romaji": "se",
+			"kind": "base",
+			"row": "s",
+			"col": "e"
+		},
+		"030bd": {
+			"symbol": "ソ",
+			"unicode": "U+30BD",
+			"romaji": "so",
+			"kind": "base",
+			"row": "s",
+			"col": "o"
+		},
+		"030bf": {
+			"symbol": "タ",
+			"unicode": "U+30BF",
+			"romaji": "ta",
+			"kind": "base",
+			"row": "t",
+			"col": "a"
+		},
+		"030c1": {
+			"symbol": "チ",
+			"unicode": "U+30C1",
+			"romaji": "chi",
+			"kind": "base",
+			"row": "t",
+			"col": "i"
+		},
+		"030c4": {
+			"symbol": "ツ",
+			"unicode": "U+30C4",
+			"romaji": "tsu",
+			"kind": "base",
+			"row": "t",
+			"col": "u"
+		},
+		"030c6": {
+			"symbol": "テ",
+			"unicode": "U+30C6",
+			"romaji": "te",
+			"kind": "base",
+			"row": "t",
+			"col": "e"
+		},
+		"030c8": {
+			"symbol": "ト",
+			"unicode": "U+30C8",
+			"romaji": "to",
+			"kind": "base",
+			"row": "t",
+			"col": "o"
+		},
+		"030ca": {
+			"symbol": "ナ",
+			"unicode": "U+30CA",
+			"romaji": "na",
+			"kind": "base",
+			"row": "n",
+			"col": "a"
+		},
+		"030cb": {
+			"symbol": "ニ",
+			"unicode": "U+30CB",
+			"romaji": "ni",
+			"kind": "base",
+			"row": "n",
+			"col": "i"
+		},
+		"030cc": {
+			"symbol": "ヌ",
+			"unicode": "U+30CC",
+			"romaji": "nu",
+			"kind": "base",
+			"row": "n",
+			"col": "u"
+		},
+		"030cd": {
+			"symbol": "ネ",
+			"unicode": "U+30CD",
+			"romaji": "ne",
+			"kind": "base",
+			"row": "n",
+			"col": "e"
+		},
+		"030ce": {
+			"symbol": "ノ",
+			"unicode": "U+30CE",
+			"romaji": "no",
+			"kind": "base",
+			"row": "n",
+			"col": "o"
+		},
+		"030cf": {
+			"symbol": "ハ",
+			"unicode": "U+30CF",
+			"romaji": "ha",
+			"kind": "base",
+			"row": "h",
+			"col": "a"
+		},
+		"030d2": {
+			"symbol": "ヒ",
+			"unicode": "U+30D2",
+			"romaji": "hi",
+			"kind": "base",
+			"row": "h",
+			"col": "i"
+		},
+		"030d5": {
+			"symbol": "フ",
+			"unicode": "U+30D5",
+			"romaji": "fu",
+			"kind": "base",
+			"row": "h",
+			"col": "u"
+		},
+		"030d8": {
+			"symbol": "ヘ",
+			"unicode": "U+30D8",
+			"romaji": "he",
+			"kind": "base",
+			"row": "h",
+			"col": "e"
+		},
+		"030db": {
+			"symbol": "ホ",
+			"unicode": "U+30DB",
+			"romaji": "ho",
+			"kind": "base",
+			"row": "h",
+			"col": "o"
+		},
+		"030de": {
+			"symbol": "マ",
+			"unicode": "U+30DE",
+			"romaji": "ma",
+			"kind": "base",
+			"row": "m",
+			"col": "a"
+		},
+		"030df": {
+			"symbol": "ミ",
+			"unicode": "U+30DF",
+			"romaji": "mi",
+			"kind": "base",
+			"row": "m",
+			"col": "i"
+		},
+		"030e0": {
+			"symbol": "ム",
+			"unicode": "U+30E0",
+			"romaji": "mu",
+			"kind": "base",
+			"row": "m",
+			"col": "u"
+		},
+		"030e1": {
+			"symbol": "メ",
+			"unicode": "U+30E1",
+			"romaji": "me",
+			"kind": "base",
+			"row": "m",
+			"col": "e"
+		},
+		"030e2": {
+			"symbol": "モ",
+			"unicode": "U+30E2",
+			"romaji": "mo",
+			"kind": "base",
+			"row": "m",
+			"col": "o"
+		},
+		"030e4": {
+			"symbol": "ヤ",
+			"unicode": "U+30E4",
+			"romaji": "ya",
+			"kind": "base",
+			"row": "y",
+			"col": "a"
+		},
+		"030e6": {
+			"symbol": "ユ",
+			"unicode": "U+30E6",
+			"romaji": "yu",
+			"kind": "base",
+			"row": "y",
+			"col": "u"
+		},
+		"030e8": {
+			"symbol": "ヨ",
+			"unicode": "U+30E8",
+			"romaji": "yo",
+			"kind": "base",
+			"row": "y",
+			"col": "o"
+		},
+		"030e9": {
+			"symbol": "ラ",
+			"unicode": "U+30E9",
+			"romaji": "ra",
+			"kind": "base",
+			"row": "r",
+			"col": "a"
+		},
+		"030ea": {
+			"symbol": "リ",
+			"unicode": "U+30EA",
+			"romaji": "ri",
+			"kind": "base",
+			"row": "r",
+			"col": "i"
+		},
+		"030eb": {
+			"symbol": "ル",
+			"unicode": "U+30EB",
+			"romaji": "ru",
+			"kind": "base",
+			"row": "r",
+			"col": "u"
+		},
+		"030ec": {
+			"symbol": "レ",
+			"unicode": "U+30EC",
+			"romaji": "re",
+			"kind": "base",
+			"row": "r",
+			"col": "e"
+		},
+		"030ed": {
+			"symbol": "ロ",
+			"unicode": "U+30ED",
+			"romaji": "ro",
+			"kind": "base",
+			"row": "r",
+			"col": "o"
+		},
+		"030ef": {
+			"symbol": "ワ",
+			"unicode": "U+30EF",
+			"romaji": "wa",
+			"kind": "base",
+			"row": "w",
+			"col": "a"
+		},
+		"030f2": {
+			"symbol": "ヲ",
+			"unicode": "U+30F2",
+			"romaji": "wo",
+			"kind": "base",
+			"row": "w",
+			"col": "o"
+		},
+		"030f3": {
+			"symbol": "ン",
+			"unicode": "U+30F3",
+			"romaji": "n",
+			"kind": "base",
+			"row": "other",
+			"col": "a"
+		},
+		"030ac": {
+			"symbol": "ガ",
+			"unicode": "U+30AC",
+			"romaji": "ga",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "a"
+		},
+		"030ae": {
+			"symbol": "ギ",
+			"unicode": "U+30AE",
+			"romaji": "gi",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "i"
+		},
+		"030b0": {
+			"symbol": "グ",
+			"unicode": "U+30B0",
+			"romaji": "gu",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "u"
+		},
+		"030b2": {
+			"symbol": "ゲ",
+			"unicode": "U+30B2",
+			"romaji": "ge",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "e"
+		},
+		"030b4": {
+			"symbol": "ゴ",
+			"unicode": "U+30B4",
+			"romaji": "go",
+			"kind": "dakuten",
+			"row": "k",
+			"col": "o"
+		},
+		"030b6": {
+			"symbol": "ザ",
+			"unicode": "U+30B6",
+			"romaji": "za",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "a"
+		},
+		"030b8": {
+			"symbol": "ジ",
+			"unicode": "U+30B8",
+			"romaji": "ji",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "i"
+		},
+		"030ba": {
+			"symbol": "ズ",
+			"unicode": "U+30BA",
+			"romaji": "zu",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "u"
+		},
+		"030bc": {
+			"symbol": "ゼ",
+			"unicode": "U+30BC",
+			"romaji": "ze",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "e"
+		},
+		"030be": {
+			"symbol": "ゾ",
+			"unicode": "U+30BE",
+			"romaji": "zo",
+			"kind": "dakuten",
+			"row": "s",
+			"col": "o"
+		},
+		"030c0": {
+			"symbol": "ダ",
+			"unicode": "U+30C0",
+			"romaji": "da",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "a"
+		},
+		"030c2": {
+			"symbol": "ヂ",
+			"unicode": "U+30C2",
+			"romaji": "ji",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "i"
+		},
+		"030c5": {
+			"symbol": "ヅ",
+			"unicode": "U+30C5",
+			"romaji": "zu",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "u"
+		},
+		"030c7": {
+			"symbol": "デ",
+			"unicode": "U+30C7",
+			"romaji": "de",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "e"
+		},
+		"030c9": {
+			"symbol": "ド",
+			"unicode": "U+30C9",
+			"romaji": "do",
+			"kind": "dakuten",
+			"row": "t",
+			"col": "o"
+		},
+		"030d0": {
+			"symbol": "バ",
+			"unicode": "U+30D0",
+			"romaji": "ba",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "a"
+		},
+		"030d3": {
+			"symbol": "ビ",
+			"unicode": "U+30D3",
+			"romaji": "bi",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "i"
+		},
+		"030d6": {
+			"symbol": "ブ",
+			"unicode": "U+30D6",
+			"romaji": "bu",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "u"
+		},
+		"030d9": {
+			"symbol": "ベ",
+			"unicode": "U+30D9",
+			"romaji": "be",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "e"
+		},
+		"030dc": {
+			"symbol": "ボ",
+			"unicode": "U+30DC",
+			"romaji": "bo",
+			"kind": "dakuten",
+			"row": "h",
+			"col": "o"
+		},
+		"030d1": {
+			"symbol": "パ",
+			"unicode": "U+30D1",
+			"romaji": "pa",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "a"
+		},
+		"030d4": {
+			"symbol": "ピ",
+			"unicode": "U+30D4",
+			"romaji": "pi",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "i"
+		},
+		"030d7": {
+			"symbol": "プ",
+			"unicode": "U+30D7",
+			"romaji": "pu",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "u"
+		},
+		"030da": {
+			"symbol": "ペ",
+			"unicode": "U+30DA",
+			"romaji": "pe",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "e"
+		},
+		"030dd": {
+			"symbol": "ポ",
+			"unicode": "U+30DD",
+			"romaji": "po",
+			"kind": "handakuten",
+			"row": "h",
+			"col": "o"
+		},
+		"030ad-030e3": {
+			"symbol": "キャ",
+			"unicode": "U+30AD-U+30E3",
+			"romaji": "kya",
+			"kind": "yoon",
+			"row": "k",
+			"col": "a"
+		},
+		"030ad-030e5": {
+			"symbol": "キュ",
+			"unicode": "U+30AD-U+30E5",
+			"romaji": "kyu",
+			"kind": "yoon",
+			"row": "k",
+			"col": "u"
+		},
+		"030ad-030e7": {
+			"symbol": "キョ",
+			"unicode": "U+30AD-U+30E7",
+			"romaji": "kyo",
+			"kind": "yoon",
+			"row": "k",
+			"col": "o"
+		},
+		"030b7-030e3": {
+			"symbol": "シャ",
+			"unicode": "U+30B7-U+30E3",
+			"romaji": "sha",
+			"kind": "yoon",
+			"row": "s",
+			"col": "a"
+		},
+		"030b7-030e5": {
+			"symbol": "シュ",
+			"unicode": "U+30B7-U+30E5",
+			"romaji": "shu",
+			"kind": "yoon",
+			"row": "s",
+			"col": "u"
+		},
+		"030b7-030e7": {
+			"symbol": "ショ",
+			"unicode": "U+30B7-U+30E7",
+			"romaji": "sho",
+			"kind": "yoon",
+			"row": "s",
+			"col": "o"
+		},
+		"030c1-030e3": {
+			"symbol": "チャ",
+			"unicode": "U+30C1-U+30E3",
+			"romaji": "cha",
+			"kind": "yoon",
+			"row": "t",
+			"col": "a"
+		},
+		"030c1-030e5": {
+			"symbol": "チュ",
+			"unicode": "U+30C1-U+30E5",
+			"romaji": "chu",
+			"kind": "yoon",
+			"row": "t",
+			"col": "u"
+		},
+		"030c1-030e7": {
+			"symbol": "チョ",
+			"unicode": "U+30C1-U+30E7",
+			"romaji": "cho",
+			"kind": "yoon",
+			"row": "t",
+			"col": "o"
+		},
+		"030cb-030e3": {
+			"symbol": "ニャ",
+			"unicode": "U+30CB-U+30E3",
+			"romaji": "nya",
+			"kind": "yoon",
+			"row": "n",
+			"col": "a"
+		},
+		"030cb-030e5": {
+			"symbol": "ニュ",
+			"unicode": "U+30CB-U+30E5",
+			"romaji": "nyu",
+			"kind": "yoon",
+			"row": "n",
+			"col": "u"
+		},
+		"030cb-030e7": {
+			"symbol": "ニョ",
+			"unicode": "U+30CB-U+30E7",
+			"romaji": "nyo",
+			"kind": "yoon",
+			"row": "n",
+			"col": "o"
+		},
+		"030d2-030e3": {
+			"symbol": "ヒャ",
+			"unicode": "U+30D2-U+30E3",
+			"romaji": "hya",
+			"kind": "yoon",
+			"row": "h",
+			"col": "a"
+		},
+		"030d2-030e5": {
+			"symbol": "ヒュ",
+			"unicode": "U+30D2-U+30E5",
+			"romaji": "hyu",
+			"kind": "yoon",
+			"row": "h",
+			"col": "u"
+		},
+		"030d2-030e7": {
+			"symbol": "ヒョ",
+			"unicode": "U+30D2-U+30E7",
+			"romaji": "hyo",
+			"kind": "yoon",
+			"row": "h",
+			"col": "o"
+		},
+		"030df-030e3": {
+			"symbol": "ミャ",
+			"unicode": "U+30DF-U+30E3",
+			"romaji": "mya",
+			"kind": "yoon",
+			"row": "m",
+			"col": "a"
+		},
+		"030df-030e5": {
+			"symbol": "ミュ",
+			"unicode": "U+30DF-U+30E5",
+			"romaji": "myu",
+			"kind": "yoon",
+			"row": "m",
+			"col": "u"
+		},
+		"030df-030e7": {
+			"symbol": "ミョ",
+			"unicode": "U+30DF-U+30E7",
+			"romaji": "myo",
+			"kind": "yoon",
+			"row": "m",
+			"col": "o"
+		},
+		"030ea-030e3": {
+			"symbol": "リャ",
+			"unicode": "U+30EA-U+30E3",
+			"romaji": "rya",
+			"kind": "yoon",
+			"row": "r",
+			"col": "a"
+		},
+		"030ea-030e5": {
+			"symbol": "リュ",
+			"unicode": "U+30EA-U+30E5",
+			"romaji": "ryu",
+			"kind": "yoon",
+			"row": "r",
+			"col": "u"
+		},
+		"030ea-030e7": {
+			"symbol": "リョ",
+			"unicode": "U+30EA-U+30E7",
+			"romaji": "ryo",
+			"kind": "yoon",
+			"row": "r",
+			"col": "o"
+		},
+		"030ae-030e3": {
+			"symbol": "ギャ",
+			"unicode": "U+30AE-U+30E3",
+			"romaji": "gya",
+			"kind": "yoon",
+			"row": "g",
+			"col": "a"
+		},
+		"030ae-030e5": {
+			"symbol": "ギュ",
+			"unicode": "U+30AE-U+30E5",
+			"romaji": "gyu",
+			"kind": "yoon",
+			"row": "g",
+			"col": "u"
+		},
+		"030ae-030e7": {
+			"symbol": "ギョ",
+			"unicode": "U+30AE-U+30E7",
+			"romaji": "gyo",
+			"kind": "yoon",
+			"row": "g",
+			"col": "o"
+		},
+		"030b8-030e3": {
+			"symbol": "ジャ",
+			"unicode": "U+30B8-U+30E3",
+			"romaji": "ja",
+			"kind": "yoon",
+			"row": "z",
+			"col": "a"
+		},
+		"030b8-030e5": {
+			"symbol": "ジュ",
+			"unicode": "U+30B8-U+30E5",
+			"romaji": "ju",
+			"kind": "yoon",
+			"row": "z",
+			"col": "u"
+		},
+		"030b8-030e7": {
+			"symbol": "ジョ",
+			"unicode": "U+30B8-U+30E7",
+			"romaji": "jo",
+			"kind": "yoon",
+			"row": "z",
+			"col": "o"
+		},
+		"030d3-030e3": {
+			"symbol": "ビャ",
+			"unicode": "U+30D3-U+30E3",
+			"romaji": "bya",
+			"kind": "yoon",
+			"row": "b",
+			"col": "a"
+		},
+		"030d3-030e5": {
+			"symbol": "ビュ",
+			"unicode": "U+30D3-U+30E5",
+			"romaji": "byu",
+			"kind": "yoon",
+			"row": "b",
+			"col": "u"
+		},
+		"030d3-030e7": {
+			"symbol": "ビョ",
+			"unicode": "U+30D3-U+30E7",
+			"romaji": "byo",
+			"kind": "yoon",
+			"row": "b",
+			"col": "o"
+		},
+		"030d4-030e3": {
+			"symbol": "ピャ",
+			"unicode": "U+30D4-U+30E3",
+			"romaji": "pya",
+			"kind": "yoon",
+			"row": "p",
+			"col": "a"
+		},
+		"030d4-030e5": {
+			"symbol": "ピュ",
+			"unicode": "U+30D4-U+30E5",
+			"romaji": "pyu",
+			"kind": "yoon",
+			"row": "p",
+			"col": "u"
+		},
+		"030d4-030e7": {
+			"symbol": "ピョ",
+			"unicode": "U+30D4-U+30E7",
+			"romaji": "pyo",
+			"kind": "yoon",
+			"row": "p",
+			"col": "o"
+		},
+		"030a1": {
+			"symbol": "ァ",
+			"unicode": "U+30A1",
+			"romaji": "a",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030a3": {
+			"symbol": "ィ",
+			"unicode": "U+30A3",
+			"romaji": "i",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030a5": {
+			"symbol": "ゥ",
+			"unicode": "U+30A5",
+			"romaji": "u",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030a7": {
+			"symbol": "ェ",
+			"unicode": "U+30A7",
+			"romaji": "e",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030a9": {
+			"symbol": "ォ",
+			"unicode": "U+30A9",
+			"romaji": "o",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030e3": {
+			"symbol": "ャ",
+			"unicode": "U+30E3",
+			"romaji": "ya",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030e5": {
+			"symbol": "ュ",
+			"unicode": "U+30E5",
+			"romaji": "yu",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030e7": {
+			"symbol": "ョ",
+			"unicode": "U+30E7",
+			"romaji": "yo",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		},
+		"030c3": {
+			"symbol": "ッ",
+			"unicode": "U+30C3",
+			"romaji": "tsu",
+			"kind": "small",
+			"row": "small",
+			"col": "none"
+		}
+	}
+}
