@@ -40,14 +40,16 @@
 
 	let {
 		symbol,
-		strokeHintsVisible,
-		userStrokesVisible,
-		onCompleteSymbol
+		hintsVisible = true,
+		strokesVisible = false,
+		disabled = false,
+		onComplete
 	}: {
 		symbol: string;
-		strokeHintsVisible: boolean;
-		userStrokesVisible: boolean;
-		onCompleteSymbol: () => void;
+		hintsVisible: boolean;
+		strokesVisible: boolean;
+		disabled: boolean;
+		onComplete: () => void;
 	} = $props();
 
 	let rawSymbolSvg: string = "";
@@ -88,7 +90,7 @@
 			activeIndex += 1;
 		} else if (activeIndex < kanjiStrokes.length) {
 			activeIndex += 1; // used as check for stroke visibility
-			onCompleteSymbol();
+			onComplete();
 		}
 	}
 
@@ -154,6 +156,8 @@
 	}
 
 	function pointerDown(e: PointerEvent) {
+		if (disabled) return;
+
 		const p = canvasToViewBox(getCanvasPoint(e));
 		currentStroke = {
 			id: "stroke-" + String(activeIndex),
@@ -172,6 +176,7 @@
 	}
 
 	function pointerMove(e: PointerEvent) {
+		if (disabled) return;
 		if (!isDrawing || !currentStroke) return;
 
 		const p = canvasToViewBox(getCanvasPoint(e));
@@ -182,8 +187,9 @@
 	}
 
 	function pointerUp(e: PointerEvent) {
-		isDrawing = false;
+		if (disabled) return;
 
+		isDrawing = false;
 		const idx: number = activeIndex;
 
 		if (currentStroke) {
@@ -250,7 +256,7 @@
 </script>
 
 <div class="component">
-	<div class="stage" bind:this={stageElement} class:shake={isShaking}>
+	<div class="stage" bind:this={stageElement} class:shake={isShaking} class:disabled>
 		<svg
 			class="svgSymbolGrid"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
@@ -260,6 +266,11 @@
 			<path d={`M ${viewBox.w / 2} ${4.5} L ${viewBox.w / 2} ${viewBox.h - 4.5}`}></path>
 			<path d={`M ${4.5} ${viewBox.h / 2} L ${viewBox.w - 4.5} ${viewBox.h / 2}`}></path>
 		</svg>
+
+		{#if disabled}
+			<div class="stageCover" aria-hidden="true"></div>
+		{/if}
+
 		<svg
 			class="svgSymbol"
 			viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
@@ -308,27 +319,26 @@
 			</defs>
 
 			{#each kanjiStrokes as kStroke, i (i)}
-				<g id={kStroke.id}>
+				<g id={kStroke.id} class:disabled>
 					<path
 						bind:this={kanjiPathElements[i]}
 						class:strokeFill={kStroke.completed}
 						d={kStroke.d}
-						class:hidden={userStrokesVisible}
+						class:hidden={strokesVisible}
 					/>
 					<path
-						class:strokeHintFill={strokeHintsVisible}
+						class:strokeHintFill={hintsVisible}
 						d={kStroke.d}
 						class:hidden={i !== activeIndex}
 					/>
 					<path
-						class:strokeHint={strokeHintsVisible}
+						class:strokeHint={hintsVisible}
 						d={kStroke.d}
 						class:hidden={i !== activeIndex}
-						marker-start={strokeHintsVisible ||
-						(!strokeHintsVisible && failedCurrentStroke)
+						marker-start={hintsVisible || (!hintsVisible && failedCurrentStroke)
 							? "url(#start-marker)"
 							: undefined}
-						marker-end={strokeHintsVisible ? "url(#end-marker)" : undefined}
+						marker-end={hintsVisible ? "url(#end-marker)" : undefined}
 					/>
 					{#if strokes[i]}
 						<path
@@ -336,7 +346,7 @@
 							bind:this={strokePathElements[i]}
 							d={strokes[i].d}
 							id={strokes[i].id}
-							class:hidden={!userStrokesVisible &&
+							class:hidden={!strokesVisible &&
 								strokes[i].completed &&
 								strokes[i].valid}
 						>
@@ -353,16 +363,17 @@
 			width="300"
 			height="300"
 			bind:this={canvas}
+			class:disabled
 			onpointerdown={pointerDown}
 			onpointermove={pointerMove}
 			onpointerup={pointerUp}
 		></canvas>
 	</div>
 
-	<div class="status">
+	<!-- <div class="status">
 		Strokes Completed: {activeIndex} /
 		{kanjiStrokes.length}
-	</div>
+	</div> -->
 </div>
 
 <style>
@@ -376,6 +387,7 @@
 
 	.stage {
 		position: relative;
+		isolation: isolate;
 		aspect-ratio: 1 / 1;
 		width: min(600px, 92vw);
 		aspect-ratio: 1 / 1;
@@ -385,6 +397,33 @@
 		box-shadow: var(--shadow);
 		overflow: hidden;
 		will-change: transform;
+	}
+
+	.stageCover {
+		position: absolute;
+		inset: 0;
+		z-index: 2;
+		background-color: var(0, 0, 0, 0.6);
+		backdrop-filter: grayscale(1) saturate(0.2);
+		width: 100%;
+		height: 100%;
+		pointer-events: auto;
+	}
+
+	.stage.disabled {
+		opacity: 0.85;
+		pointer-events: none;
+	}
+
+	.stage.disabled .strokeHint,
+	.stage.disabled .strokeHintFill,
+	.stage.disabled .startCap,
+	.stage.disabled .endCap {
+		opacity: 0 !important;
+	}
+
+	.drawingInput.disabled {
+		pointer-events: none;
 	}
 
 	.svgSymbolGrid {
@@ -397,7 +436,7 @@
 
 	.svgSymbolGrid path {
 		fill: none;
-		stroke: rgba(36, 27, 26, 0.12);
+		stroke: var(--light-gray);
 		stroke-width: 0.55;
 		stroke-linecap: round;
 		stroke-linejoin: round;
@@ -408,9 +447,9 @@
 	.svgSymbol {
 		position: absolute;
 		inset: 0;
+		opacity: 1;
 		width: 100%;
 		height: 100%;
-		opacity: 1;
 	}
 
 	.svgSymbol .hidden {

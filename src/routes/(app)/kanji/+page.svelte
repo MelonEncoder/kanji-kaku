@@ -1,223 +1,193 @@
 <script lang="ts">
-	import KanjiInfoModal from "$lib/components/KanjiInfoModal.svelte";
-	import SymbolCard from "$lib/components/SymbolCard.svelte";
-	import type { PageData } from "./$types";
-	import { onMount } from "svelte";
+	import { resolve } from "$app/paths";
 
-	type Item = (typeof data.items)[number];
-	type GroupLevel = 1 | 2 | 3 | 4 | 5 | "other";
-	type Selected = { item: Item } | null;
-
-	const { data }: { data: PageData } = $props();
-	const totalKanji = $derived(data.items.length);
-
-	let selected: Selected = $state(null);
-	const isOpen = $derived(!!selected);
-
-	function label(level: GroupLevel) {
-		return level === "other" ? "other" : `N${level}`;
-	}
-
-	// Build groups on the client (since server returns a flat list)
-	const groups = $derived.by(() => {
-		const buckets = new Map<GroupLevel, Item[]>([
-			[5, []],
-			[4, []],
-			[3, []],
-			[2, []],
-			[1, []],
-			["other", []]
-		]);
-
-		for (const item of data.items) {
-			const level: GroupLevel = item.jlpt ?? "other";
-			buckets.get(level)!.push(item);
-		}
-
-		// Optional: stable-ish sorting within a group
-		for (const arr of buckets.values()) {
-			arr.sort((a, b) => a.symbol.localeCompare(b.symbol));
-		}
-
-		const ordered: GroupLevel[] = [5, 4, 3, 2, 1, "other"];
-		return ordered
-			.map((level) => ({ level, items: buckets.get(level)! }))
-			.filter((g) => g.items.length > 0);
-	});
-
-	function selectKanji(item: Item) {
-		selected = { item };
-	}
-
-	function closeModal() {
-		selected = null;
-	}
-
-	function toggleSelect(item: Item) {
-		if (selected?.item.kvgId === item.kvgId) closeModal();
-		else selectKanji(item);
-	}
-
-	onMount(() => {
-		const onKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape" && isOpen) closeModal();
-		};
-		window.addEventListener("keydown", onKeyDown);
-		return () => window.removeEventListener("keydown", onKeyDown);
-	});
+	const levels = [
+		{ label: "N5", href: "/kanji/N5", desc: "Beginner" },
+		{ label: "N4", href: "/kanji/N4", desc: "Elementary" },
+		{ label: "N3", href: "/kanji/N3", desc: "Intermediate" },
+		{ label: "N2", href: "/kanji/N2", desc: "Upper-intermediate" },
+		{ label: "N1", href: "/kanji/N1", desc: "Advanced" }
+	] as const;
 </script>
 
-<main class="page" class:drawer-open={isOpen}>
-	<section class="content">
-		<header class="topbar">
+<main class="page">
+	<section class="hero" aria-label="Kanji landing page">
+		<header class="header">
 			<h1 class="title">Kanji</h1>
-			<p class="subtitle">{totalKanji} kanji</p>
+			<p class="subtitle">
+				Kanji (漢字) are the logographic characters used in Japanese writing. Each kanji
+				carries meaning and can have multiple readings depending on context. Learning them
+				is a big step toward reading real Japanese.
+			</p>
 		</header>
 
-		<div class="stack" aria-label="Kanji groups">
-			{#each groups as group (group.level)}
-				<section class="group" id={label(group.level)}>
-					<header class="groupHeader">
-						<div class="groupTitle">
-							<h2>
-								{#if group.level !== "other"}
-									JLPT {label(group.level)}
-								{:else}
-									Not in JLPT
-								{/if}
-							</h2>
-							<span class="count">{group.items.length}</span>
-						</div>
-					</header>
+		<div class="panel">
+			<h2 class="panelTitle">Choose a JLPT level</h2>
+			<p class="panelSub">
+				Start with N5 if you’re new. Move up as you get comfortable recognizing and writing
+				more characters.
+			</p>
 
-					<div class="grid" aria-label={`${label(group.level)} kanji`}>
-						{#each group.items as item (item.kvgId)}
-							<SymbolCard
-								selected={selected?.item.kvgId === item.kvgId}
-								symbol={item.symbol}
-								subText={null}
-								progress={0}
-								onclick={() => toggleSelect(item)}
-							/>
-						{/each}
-					</div>
-				</section>
-			{/each}
+			<nav class="grid" aria-label="JLPT kanji levels">
+				{#each levels as level (level.label)}
+					<a
+						class="levelCard"
+						href={resolve(level.href)}
+						aria-label={`Go to JLPT ${level.label} kanji`}
+					>
+						<div class="levelTop">
+							<span class="badge">{level.label}</span>
+							<span class="desc">{level.desc}</span>
+						</div>
+						<span class="chev" aria-hidden="true">→</span>
+					</a>
+				{/each}
+			</nav>
 		</div>
+
+		<footer class="note">
+			<p>
+				Tip: focus on recognition first, then practice writing stroke order once the meaning
+				+ readings feel familiar.
+			</p>
+		</footer>
 	</section>
-	{#if selected}
-		<KanjiInfoModal
-			open={!!selected}
-			kanji={selected.item.symbol}
-			jlptLevel={selected.item.jlpt}
-			meanings={selected.item.meanings}
-			readings_on={selected.item.readings_on}
-			readings_kun={selected.item.readings_kun}
-			strokes={selected.item.strokes ?? 0}
-			onClose={closeModal}
-			onPractice={(kanji: string) => {
-				closeModal();
-				console.log(kanji);
-				// goto(`/practice/${kanji}`);
-			}}
-		/>
-	{/if}
 </main>
 
 <style>
-	/* Layout */
 	.page {
 		min-height: 100dvh;
 		padding: 1.25rem;
 		display: flex;
 		justify-content: center;
-
 		color: var(--ink);
 		font-family: var(--font);
-		position: relative;
 	}
 
-	.content {
-		width: min(1100px, 100%);
+	.hero {
+		width: min(980px, 100%);
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
 	}
 
-	.topbar {
-		max-width: var(--card-width, 900px);
-		margin: 0 auto 1.25rem;
+	.header {
 		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.4rem;
-	}
-
-	.title {
-		margin: 0;
-		font-size: 2.35rem;
-		font-weight: 950;
-		letter-spacing: 0.2px;
-	}
-
-	.subtitle {
-		margin: 0;
-		color: var(--muted);
-		font-weight: 650;
-	}
-
-	.stack {
-		display: flex;
-		flex-direction: column;
-		gap: 3rem;
-		margin: 0 auto;
-	}
-
-	.group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.groupHeader {
-		padding: 1rem 1.1rem;
-		border-radius: var(--radius-md);
+		padding: 1.25rem 1.1rem;
+		border-radius: var(--radius-lg);
 		border: 2px solid var(--stroke);
 		background: var(--linear-grad);
 		box-shadow: var(--shadow-soft);
 	}
 
-	.groupTitle {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 0.75rem;
+	.title {
+		margin: 0;
+		font-size: 2.6rem;
+		font-weight: 950;
+		letter-spacing: 0.2px;
 	}
 
-	.groupHeader h2 {
+	.subtitle {
+		margin: 0.6rem auto 0;
+		max-width: 72ch;
+		color: var(--muted);
+		font-weight: 650;
+		line-height: 1.5;
+	}
+
+	.panel {
+		padding: 1.1rem;
+		border-radius: var(--radius-lg);
+		border: 2px solid var(--stroke);
+		background: rgba(255, 255, 255, 0.6);
+		box-shadow: var(--shadow-soft);
+	}
+
+	.panelTitle {
 		margin: 0;
-		font-size: 1.1rem;
+		font-size: 1.05rem;
 		font-weight: 950;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 	}
 
-	.count {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-width: 2.25rem;
-		padding: 0.2rem 0.55rem;
-		border-radius: 999px;
-		border: 2px solid rgba(36, 27, 26, 0.12);
-		background: rgba(255, 255, 255, 0.65);
-		color: var(--ink);
-		font-weight: 900;
-		letter-spacing: 0.04em;
+	.panelSub {
+		margin: 0.45rem 0 0.95rem;
+		color: var(--muted);
+		font-weight: 650;
+		line-height: 1.5;
 	}
 
 	.grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 		gap: 0.75rem;
+	}
+
+	.levelCard {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+
+		padding: 0.9rem 0.95rem;
+		border-radius: var(--radius-md);
+		border: 2px solid var(--stroke);
+		background: var(--card);
+		box-shadow: var(--shadow-soft);
+
+		text-decoration: none;
+		color: inherit;
+
+		transition:
+			transform 120ms ease,
+			box-shadow 120ms ease;
+	}
+
+	.levelCard:hover {
+		transform: translateY(-1px);
+		box-shadow:
+			var(--shadow-soft),
+			0 10px 30px rgba(36, 27, 26, 0.08);
+	}
+
+	.levelTop {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.badge {
+		display: inline-flex;
+		width: fit-content;
+		padding: 0.18rem 0.55rem;
+		border-radius: 999px;
+		border: 2px solid rgba(36, 27, 26, 0.12);
+		background: rgba(255, 255, 255, 0.7);
+		font-weight: 950;
+		letter-spacing: 0.05em;
+	}
+
+	.desc {
+		color: var(--muted);
+		font-weight: 650;
+		font-size: 0.95rem;
+	}
+
+	.chev {
+		font-weight: 950;
+		opacity: 0.75;
+	}
+
+	.note {
+		text-align: center;
+		color: var(--muted);
+		font-weight: 650;
+		margin-top: 0.25rem;
+	}
+
+	.note p {
+		margin: 0;
 	}
 
 	@media (max-width: 640px) {
@@ -225,8 +195,8 @@
 			padding: 1rem;
 		}
 
-		.groupHeader {
-			padding: 0.9rem;
+		.title {
+			font-size: 2.3rem;
 		}
 	}
 </style>

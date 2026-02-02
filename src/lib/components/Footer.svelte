@@ -1,6 +1,6 @@
 <footer class="site-footer">
 	<div class="inner">
-		<p class="copyright">© 2026 Kanji Notebook.</p>
+		<p class="copyright">© 2026 Kanji Kaku</p>
 
 		<nav aria-label="Footer">
 			<ul class="links">

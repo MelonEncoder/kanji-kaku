@@ -1,4 +1,4 @@
-# Kanji Notebook
+# Kanji Kaku
 
 An open-source application for learning how to draw kanji using stroke-order data.
 

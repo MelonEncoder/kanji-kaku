@@ -4,7 +4,7 @@
 
 <header class="site-header">
 	<nav class="nav">
-		<h1 class="brand"><a href={resolve("/")}>Kanji Notebook</a></h1>
+		<h1 class="brand"><a href={resolve("/")}>Kanji Kaku</a></h1>
 
 		<ul class="nav-links">
 			<li><a href={resolve("/kana")}>Kana</a></li>

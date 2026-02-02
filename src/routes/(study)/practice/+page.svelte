@@ -95,9 +95,10 @@
 				{#if currentStep?.type === "draw"}
 					<DrawSymbol
 						symbol={currentStep.symbol}
-						strokeHintsVisible={true}
-						userStrokesVisible={false}
-						onCompleteSymbol={handleCompleteSymbol}
+						hintsVisible={true}
+						strokesVisible={false}
+						onComplete={handleCompleteSymbol}
+						disabled={false}
 					/>
 				{/if}
 			</section>

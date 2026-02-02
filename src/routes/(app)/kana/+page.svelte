@@ -55,6 +55,16 @@
 <main class="page">
 	<section class="content">
 		<header class="topbar">
+			<h1 class="pageTitle">
+				Let’s learn <span class="scriptWord">{currentScript}</span>!
+			</h1>
+
+			{#if currentScript === "hiragana"}
+				<p>Used as the main writing system in Japanese</p>
+			{:else}
+				<p>These characters are often used for loanwords</p>
+			{/if}
+
 			<div
 				class="tabSelector"
 				role="tablist"
@@ -83,15 +93,6 @@
 					KATAKANA
 				</button>
 			</div>
-
-			<h1 class="pageTitle">
-				Let’s learn <span class="scriptWord">{currentScript}</span>!
-			</h1>
-			{#if currentScript === "hiragana"}
-				<p>Used as the main writing system in Japanese</p>
-			{:else}
-				<p>These characters are often used for loanwords</p>
-			{/if}
 		</header>
 
 		<div class="stack">
